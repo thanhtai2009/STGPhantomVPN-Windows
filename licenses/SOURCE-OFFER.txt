@@ -1,0 +1,31 @@
+Corresponding source for GPL components used by STG Phantom VPN
+================================================================
+
+By default STG Phantom VPN does not contain any GPL binary. When OpenVPN is missing, the app
+downloads the unmodified official installer from build.openvpn.net over HTTPS, checks its
+SHA-256 and Authenticode signature (OpenVPN Inc.), and asks Windows (UAC) to install it.
+
+Installer used:  OpenVPN-2.6.23-I002-<arch>.msi
+  https://build.openvpn.net/downloads/releases/OpenVPN-2.6.23-I002-amd64.msi
+  SHA-256 amd64  31809e97debe44c12be06ed892c2a43e55b67b31cb852827b7ec8f2d6c0b8dc6
+  SHA-256 arm64  1c5e21a537fb920f251de9f842f2582d744901d45a1cc5f1e911eade87b2d63f
+  SHA-256 x86    bbf4c4b76f6255ccb2fbec0203fe72e6c6269dfb7cb075436da69faff90c6101
+
+Source code:
+  OpenVPN 2.6.23        https://github.com/OpenVPN/openvpn/tree/v2.6.23
+                        https://swupdate.openvpn.org/community/releases/openvpn-2.6.23.tar.gz
+                        SHA-256 4041c709162bec1325abf5aa8cf27a255cc477c634b15ee310411c701fc40a96
+  Windows installer     https://github.com/OpenVPN/openvpn-build
+                        (tag OpenVPN-2.6.23-I001 is the nearest published tag; I002 is a rebuild
+                        of the same OpenVPN source)
+  TAP-Windows6          https://github.com/OpenVPN/tap-windows6
+  ovpn-dco-win          https://github.com/OpenVPN/ovpn-dco-win
+  OpenSSL               https://github.com/openssl/openssl
+  LZO                   https://www.oberhumer.com/opensource/lzo/
+  LZ4                   https://github.com/lz4/lz4
+  pkcs11-helper         https://github.com/OpenSC/pkcs11-helper
+
+Packages built with "build.sh --bundle-openvpn" also contain the MSI in redist\ and the
+OpenVPN source tarball in source\. For at least three years from the date you received such a
+package, the distributor will provide a copy of the corresponding source on request at no more
+than the cost of physically performing the distribution. Contact: phuongnam.TaiNT13@fpt.net

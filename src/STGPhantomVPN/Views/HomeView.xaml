@@ -1,0 +1,267 @@
+<UserControl x:Class="STGPhantomVPN.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:svc="clr-namespace:STGPhantomVPN.Services"
+             xmlns:views="clr-namespace:STGPhantomVPN.Views">
+    <!-- The page never scrolls: the block is laid out for about 520 DIP, shrinks uniformly on shorter pages and
+         switches to two columns on wide ones (HomeView.xaml.cs, Core/HomeLayout). Fluent layout: hero status
+         card with the accent connect button, server selector card, session and IP SettingsExpander cards. -->
+    <DockPanel>
+        <views:DesignerCredits x:Name="Credits" DockPanel.Dock="Bottom" Margin="0,2,0,8" />
+        <Viewbox x:Name="Fit" Stretch="Uniform" StretchDirection="Both" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid x:Name="Board" Margin="24,16,24,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="LeftColumn" Width="540" />
+                    <ColumnDefinition x:Name="GapColumn" Width="0" />
+                    <ColumnDefinition x:Name="RightColumn" Width="0" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel x:Name="Primary">
+                    <!-- Hero: shield (ProgressRing while connecting), state title, subtitle, connect button -->
+                    <Border x:Name="StatusCard" Style="{StaticResource SectionCard}" Padding="24,18">
+                        <Grid x:Name="Hero">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid x:Name="ShieldBox" Width="104" Height="104" VerticalAlignment="Center">
+                                <Ellipse x:Name="Glow" Visibility="{Binding IsConnected, Converter={StaticResource BoolToVis}}">
+                                    <Ellipse.Fill>
+                                        <RadialGradientBrush>
+                                            <GradientStop Offset="0" Color="#5514B8A6" />
+                                            <GradientStop Offset="1" Color="#0014B8A6" />
+                                        </RadialGradientBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <views:Glyph x:Name="ShieldGlyph" Width="76" Height="76" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                             Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}, ConverterParameter=invert}">
+                                    <views:Glyph.Style>
+                                        <Style TargetType="views:Glyph">
+                                            <Setter Property="Kind" Value="Shield" />
+                                            <Setter Property="Foreground" Value="{DynamicResource Fluent.TextTertiary}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                                    <Setter Property="Kind" Value="ShieldCheck" />
+                                                    <Setter Property="Foreground" Value="{DynamicResource Fluent.Accent}" />
+                                                    <Setter Property="InnerBrush" Value="{DynamicResource Fluent.TextOnAccent}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </views:Glyph.Style>
+                                </views:Glyph>
+                                <views:ProgressRing x:Name="ConnectRing" Width="64" Height="64" Thickness="5" ShowTrack="True"
+                                                    Foreground="{DynamicResource Fluent.Accent}"
+                                                    IsActive="{Binding IsBusy}"
+                                                    Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}" />
+                            </Grid>
+                            <StackPanel x:Name="HeroText" Grid.Column="1" Margin="20,0,0,0" VerticalAlignment="Center">
+                                <TextBlock x:Name="HeroTitle" Style="{StaticResource Fluent.Title}" TextWrapping="Wrap" Text="{Binding StatusTitle}" />
+                                <TextBlock x:Name="HeroSubtitle" Margin="0,2,0,0" Style="{StaticResource Muted}" FontSize="14" Text="{Binding StatusSubtitle}" />
+                                <Button x:Name="ConnectButton" Margin="0,14,0,0" Height="40" MinWidth="200" HorizontalAlignment="Left" Padding="20,0"
+                                        Command="{Binding ConnectToggleCommand}" views:FluentAssist.CornerRadius="6">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource Fluent.AccentButton}">
+                                            <Style.Triggers>
+                                                <!-- Disconnect is the standard (non-accent) button, as WinUI keeps one accent action per view -->
+                                                <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                                    <Setter Property="Background" Value="{DynamicResource Fluent.ControlFill}" />
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource Fluent.ControlStrokeStrong}" />
+                                                    <Setter Property="Foreground" Value="{DynamicResource Fluent.Text}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <StackPanel Orientation="Horizontal">
+                                        <views:Glyph Width="18" Height="18" VerticalAlignment="Center">
+                                            <views:Glyph.Style>
+                                                <Style TargetType="views:Glyph">
+                                                    <Setter Property="Kind" Value="Power" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                                            <Setter Property="Kind" Value="Stop" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                                                            <Setter Property="Kind" Value="Busy" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </views:Glyph.Style>
+                                        </views:Glyph>
+                                        <TextBlock Margin="10,0,0,0" VerticalAlignment="Center" FontSize="15" FontWeight="SemiBold" Text="{Binding ConnectLabel}" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Error InfoBar: only after a failed attempt, never while idle or connected -->
+                    <views:InfoBar x:Name="ErrorLines" Margin="0,0,0,4" Severity="Error" Message="{Binding HomeError}"
+                                   Visibility="{Binding HasHomeError, Converter={StaticResource BoolToVis}}">
+                        <TextBlock FontSize="13">
+                            <Hyperlink Command="{Binding ShowLogsCommand}">
+                                <Run Text="{Binding [show_logs], Source={x:Static svc:Loc.Instance}, Mode=OneWay}" />
+                            </Hyperlink>
+                        </TextBlock>
+                    </views:InfoBar>
+                </StackPanel>
+
+                <StackPanel x:Name="Secondary" Grid.Row="1">
+                    <!-- Selected server (SettingsCard-like clickable row): opens the Servers page -->
+                    <Button x:Name="ServerCard" Style="{StaticResource Fluent.CardButton}" Margin="0,0,0,4" Padding="16,10"
+                            Command="{Binding GoToServersCommand}">
+                        <DockPanel>
+                            <views:CountryBadge DockPanel.Dock="Left" Code="{Binding SelectedCode}" />
+                            <views:Glyph DockPanel.Dock="Right" Kind="ChevronRight" Width="16" Height="16" StrokeWeight="2.2" VerticalAlignment="Center"
+                                         Foreground="{DynamicResource Fluent.TextSecondary}" />
+                            <StackPanel Margin="14,0" VerticalAlignment="Center">
+                                <TextBlock FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Text="{Binding SelectedTitle}" />
+                                <TextBlock Style="{StaticResource Fluent.Caption}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="{Binding SelectedSubtitle}" />
+                            </StackPanel>
+                        </DockPanel>
+                    </Button>
+
+                    <!-- Session statistics (SettingsExpander-like): time in the header, data and live speed in the body -->
+                    <views:SettingsExpander x:Name="StatsCard" Icon="Timer" Padding="8,8"
+                                            Header="{Binding [connection_time], Source={x:Static svc:Loc.Instance}}">
+                        <views:SettingsExpander.HeaderContent>
+                            <TextBlock FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center" Text="{Binding ConnectionTime}" />
+                        </views:SettingsExpander.HeaderContent>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <views:StatCell Margin="4,0" Label="{Binding [data_transferred], Source={x:Static svc:Loc.Instance}}" Value="{Binding DataTransferred}" />
+                            <Rectangle Grid.Column="1" Width="1" Height="32" Fill="{DynamicResource Fluent.Divider}" />
+                            <views:StatCell Grid.Column="2" Margin="4,0" Label="{Binding [download_speed], Source={x:Static svc:Loc.Instance}}" Value="{Binding DownSpeed}" />
+                            <Rectangle Grid.Column="3" Width="1" Height="32" Fill="{DynamicResource Fluent.Divider}" />
+                            <views:StatCell Grid.Column="4" Margin="4,0" Label="{Binding [upload_speed], Source={x:Static svc:Loc.Instance}}" Value="{Binding UpSpeed}" />
+                        </Grid>
+                    </views:SettingsExpander>
+
+                    <!-- Public IP (SettingsExpander-like): leak verdict in the header, real IP and VPN IP rows in the body -->
+                    <views:SettingsExpander x:Name="IpCard" Icon="Globe" Padding="16,6,8,8"
+                                            Header="{Binding [ip_section], Source={x:Static svc:Loc.Instance}}">
+                        <views:SettingsExpander.Description>
+                            <DockPanel LastChildFill="True" Visibility="{Binding IpStatusText, Converter={StaticResource NonEmptyToVis}}">
+                                <Ellipse x:Name="VerdictDot" DockPanel.Dock="Left" Width="8" Height="8" Margin="0,4,6,0" VerticalAlignment="Top">
+                                    <Ellipse.Style>
+                                        <Style TargetType="Ellipse">
+                                            <Setter Property="Fill" Value="{DynamicResource Fluent.Neutral}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IpStatusKind}" Value="ok">
+                                                    <Setter Property="Fill" Value="{DynamicResource Fluent.Success}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IpStatusKind}" Value="warn">
+                                                    <Setter Property="Fill" Value="{DynamicResource Fluent.Critical}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Ellipse.Style>
+                                </Ellipse>
+                                <TextBlock FontSize="12" TextWrapping="Wrap" Text="{Binding IpStatusText}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="{DynamicResource Fluent.TextSecondary}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IpStatusKind}" Value="ok">
+                                                    <Setter Property="Foreground" Value="{DynamicResource Fluent.Success}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IpStatusKind}" Value="warn">
+                                                    <Setter Property="Foreground" Value="{DynamicResource Fluent.Critical}" />
+                                                    <Setter Property="FontWeight" Value="SemiBold" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DockPanel>
+                        </views:SettingsExpander.Description>
+                        <views:SettingsExpander.HeaderContent>
+                            <Button Command="{Binding CheckIpCommand}" Padding="10,4,12,5" views:FluentAssist.IsBusy="{Binding IsCheckingIp}">
+                                <StackPanel Orientation="Horizontal">
+                                    <views:Glyph Kind="Refresh" Width="14" Height="14" VerticalAlignment="Center"
+                                                 Visibility="{Binding IsCheckingIp, Converter={StaticResource BoolToVis}, ConverterParameter=invert}" />
+                                    <TextBlock Margin="6,0,0,0" FontSize="13" VerticalAlignment="Center" Text="{Binding [ip_check], Source={x:Static svc:Loc.Instance}}" />
+                                </StackPanel>
+                            </Button>
+                        </views:SettingsExpander.HeaderContent>
+
+                        <!-- Real IP (measured while disconnected) and the IP seen through the VPN -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" MinWidth="70" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock VerticalAlignment="Center" Style="{StaticResource Fluent.Caption}" Margin="0,0,10,0" Text="{Binding [ip_real], Source={x:Static svc:Loc.Instance}}" />
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <DockPanel>
+                                    <views:SmallFlag DockPanel.Dock="Left" Code="{Binding RealIpCode}" />
+                                    <TextBlock DockPanel.Dock="Left" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" Text="{Binding RealIpText}" />
+                                    <TextBlock Margin="8,0,0,0" Style="{StaticResource Fluent.Caption}" VerticalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{Binding RealIpDetails}" />
+                                </DockPanel>
+                                <TextBlock FontSize="11" Foreground="{DynamicResource Fluent.TextSecondary}" TextTrimming="CharacterEllipsis" Text="{Binding RealIpv6Text}"
+                                           Visibility="{Binding RealIpv6Text, Converter={StaticResource NonEmptyToVis}}" />
+                            </StackPanel>
+                            <Button Grid.Column="2" Style="{StaticResource Fluent.IconButton}" Width="30" Height="30"
+                                    Command="{Binding CopyRealIpCommand}" ToolTip="{Binding [ip_copy], Source={x:Static svc:Loc.Instance}}">
+                                <views:Glyph Kind="Copy" Width="15" Height="15" StrokeWeight="1.8" />
+                            </Button>
+
+                            <TextBlock Grid.Row="1" VerticalAlignment="Center" Style="{StaticResource Fluent.Caption}" Margin="0,0,10,0" Text="{Binding [ip_vpn], Source={x:Static svc:Loc.Instance}}" />
+                            <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                                <DockPanel>
+                                    <views:SmallFlag DockPanel.Dock="Left" Code="{Binding VpnIpCode}" />
+                                    <TextBlock DockPanel.Dock="Left" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" Text="{Binding VpnIpText}" />
+                                    <TextBlock Margin="8,0,0,0" Style="{StaticResource Fluent.Caption}" VerticalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{Binding VpnIpDetails}" />
+                                </DockPanel>
+                                <TextBlock FontSize="11" Foreground="{DynamicResource Fluent.Critical}" TextTrimming="CharacterEllipsis" Text="{Binding VpnIpv6Text}"
+                                           Visibility="{Binding VpnIpv6Text, Converter={StaticResource NonEmptyToVis}}" />
+                            </StackPanel>
+                            <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource Fluent.IconButton}" Width="30" Height="30"
+                                    Command="{Binding CopyVpnIpCommand}" ToolTip="{Binding [ip_copy], Source={x:Static svc:Loc.Instance}}">
+                                <views:Glyph Kind="Copy" Width="15" Height="15" StrokeWeight="1.8" />
+                            </Button>
+                        </Grid>
+                    </views:SettingsExpander>
+
+                    <!-- OpenVPN not installed yet (SettingsCard with the install action) -->
+                    <views:SettingsCard x:Name="OpenVpnCard" Icon="Download" Visibility="{Binding OpenVpnMissing, Converter={StaticResource BoolToVis}}"
+                                        Header="{Binding [openvpn_card_title], Source={x:Static svc:Loc.Instance}}"
+                                        Description="{Binding [openvpn_card_body], Source={x:Static svc:Loc.Instance}}">
+                        <Grid>
+                            <Button Style="{StaticResource Fluent.AccentButton}" Command="{Binding InstallOpenVpnCommand}" Content="{Binding OpenVpnInstallLabel}"
+                                    Visibility="{Binding PrerequisitesBlock, Converter={StaticResource BoolToVis}, ConverterParameter=invert}" />
+                            <Button Command="{Binding ShowPrereqCommand}" Content="{Binding [prereq_show], Source={x:Static svc:Loc.Instance}}"
+                                    Visibility="{Binding PrerequisitesBlock, Converter={StaticResource BoolToVis}}" />
+                        </Grid>
+                        <views:SettingsCard.Footer>
+                            <StackPanel>
+                                <views:InfoBar Severity="Warning" Message="{Binding [prereq_blocked_notice], Source={x:Static svc:Loc.Instance}}"
+                                               Visibility="{Binding PrerequisitesBlock, Converter={StaticResource BoolToVis}}" />
+                                <TextBlock Style="{StaticResource Muted}" Text="{Binding OpenVpnInstallMessage}"
+                                           Visibility="{Binding OpenVpnInstallMessage, Converter={StaticResource NonEmptyToVis}}" />
+                            </StackPanel>
+                        </views:SettingsCard.Footer>
+                    </views:SettingsCard>
+                </StackPanel>
+            </Grid>
+        </Viewbox>
+    </DockPanel>
+</UserControl>

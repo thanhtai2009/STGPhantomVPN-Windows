@@ -1,0 +1,199 @@
+<UserControl x:Class="STGPhantomVPN.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:svc="clr-namespace:STGPhantomVPN.Services"
+             xmlns:views="clr-namespace:STGPhantomVPN.Views">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <!-- Windows 11 Settings pattern: section headers over SettingsCards (icon, header, description, control).
+             Two columns when the window is wide enough (SettingsView.xaml.cs), one column otherwise. -->
+        <Grid x:Name="Layout" Margin="32,20,32,8" MaxWidth="1040">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition x:Name="GapColumn" Width="16" />
+                <ColumnDefinition x:Name="RightColumn" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.ColumnSpan="3" Margin="0,0,0,4" Style="{StaticResource Fluent.Title}"
+                       Text="{Binding [settings_title], Source={x:Static svc:Loc.Instance}}" />
+
+            <StackPanel x:Name="LeftPanel" Grid.Row="1">
+                <!-- Appearance -->
+                <TextBlock Style="{StaticResource Fluent.SectionHeader}" Text="{Binding [appearance], Source={x:Static svc:Loc.Instance}}" />
+                <views:SettingsCard Icon="Appearance" Header="{Binding [theme], Source={x:Static svc:Loc.Instance}}">
+                    <views:SettingsCard.Footer>
+                        <WrapPanel>
+                            <RadioButton Style="{StaticResource Fluent.Choice}" GroupName="theme"
+                                         IsChecked="{Binding Theme, Converter={StaticResource EqualsParam}, ConverterParameter=System}"
+                                         Content="{Binding [theme_system], Source={x:Static svc:Loc.Instance}}" />
+                            <RadioButton Style="{StaticResource Fluent.Choice}" GroupName="theme"
+                                         IsChecked="{Binding Theme, Converter={StaticResource EqualsParam}, ConverterParameter=Light}"
+                                         Content="{Binding [theme_light], Source={x:Static svc:Loc.Instance}}" />
+                            <RadioButton Style="{StaticResource Fluent.Choice}" GroupName="theme"
+                                         IsChecked="{Binding Theme, Converter={StaticResource EqualsParam}, ConverterParameter=Dark}"
+                                         Content="{Binding [theme_dark], Source={x:Static svc:Loc.Instance}}" />
+                        </WrapPanel>
+                    </views:SettingsCard.Footer>
+                </views:SettingsCard>
+                <views:SettingsCard Icon="Globe" Header="{Binding [language], Source={x:Static svc:Loc.Instance}}">
+                    <views:SettingsCard.Footer>
+                        <WrapPanel>
+                            <RadioButton Style="{StaticResource Fluent.Choice}" GroupName="lang"
+                                         IsChecked="{Binding Language, Converter={StaticResource EqualsParam}, ConverterParameter=vi}"
+                                         Content="{Binding [lang_vi], Source={x:Static svc:Loc.Instance}}" />
+                            <RadioButton Style="{StaticResource Fluent.Choice}" GroupName="lang"
+                                         IsChecked="{Binding Language, Converter={StaticResource EqualsParam}, ConverterParameter=en}"
+                                         Content="{Binding [lang_en], Source={x:Static svc:Loc.Instance}}" />
+                            <RadioButton Style="{StaticResource Fluent.Choice}" GroupName="lang"
+                                         IsChecked="{Binding Language, Converter={StaticResource EqualsParam}, ConverterParameter=zh-CN}"
+                                         Content="{Binding [lang_zh_cn], Source={x:Static svc:Loc.Instance}}" />
+                            <RadioButton Style="{StaticResource Fluent.Choice}" GroupName="lang"
+                                         IsChecked="{Binding Language, Converter={StaticResource EqualsParam}, ConverterParameter=km}"
+                                         Content="{Binding [lang_km], Source={x:Static svc:Loc.Instance}}" />
+                        </WrapPanel>
+                    </views:SettingsCard.Footer>
+                </views:SettingsCard>
+                <views:SettingsCard Icon="Windows" Header="{Binding [minimize_to_tray], Source={x:Static svc:Loc.Instance}}"
+                                    Description="{Binding [minimize_to_tray_summary], Source={x:Static svc:Loc.Instance}}">
+                    <ToggleButton Style="{StaticResource Fluent.ToggleSwitch}" IsChecked="{Binding MinimizeToTray}" />
+                </views:SettingsCard>
+
+                <!-- Connection -->
+                <TextBlock Style="{StaticResource Fluent.SectionHeader}" Text="{Binding [connection_section], Source={x:Static svc:Loc.Instance}}" />
+                <views:SettingsCard Icon="Network" Header="{Binding [allow_local_lan], Source={x:Static svc:Loc.Instance}}"
+                                    Description="{Binding [allow_local_lan_summary], Source={x:Static svc:Loc.Instance}}">
+                    <ToggleButton Style="{StaticResource Fluent.ToggleSwitch}" IsChecked="{Binding AllowLocalLan}" />
+                </views:SettingsCard>
+                <views:SettingsCard Icon="ShieldLock" Header="{Binding [block_dns], Source={x:Static svc:Loc.Instance}}"
+                                    Description="{Binding [block_dns_summary], Source={x:Static svc:Loc.Instance}}">
+                    <ToggleButton Style="{StaticResource Fluent.ToggleSwitch}" IsChecked="{Binding BlockOutsideDns}" />
+                </views:SettingsCard>
+                <views:SettingsCard Icon="ShieldCheck" Header="{Binding [block_ipv6], Source={x:Static svc:Loc.Instance}}"
+                                    Description="{Binding [block_ipv6_summary], Source={x:Static svc:Loc.Instance}}">
+                    <ToggleButton Style="{StaticResource Fluent.ToggleSwitch}" IsChecked="{Binding BlockIpv6}" />
+                </views:SettingsCard>
+
+                <!-- DNS while connected: server default, public resolvers, or custom IPv4 -->
+                <views:SettingsCard Icon="Dns" Header="{Binding [dns_label], Source={x:Static svc:Loc.Instance}}"
+                                    Description="{Binding [dns_summary], Source={x:Static svc:Loc.Instance}}">
+                    <views:SettingsCard.Footer>
+                        <StackPanel>
+                            <ComboBox ItemsSource="{Binding DnsChoices}" SelectedItem="{Binding SelectedDns}" Style="{StaticResource Fluent.ComboBox}" Padding="10,5,36,5">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel>
+                                            <Grid DockPanel.Dock="Left" Width="24" Height="24" VerticalAlignment="Center">
+                                                <Image Width="20" Height="20" Source="{Binding Logo}" RenderOptions.BitmapScalingMode="HighQuality"
+                                                       Visibility="{Binding HasLogo, Converter={StaticResource BoolToVis}}" />
+                                                <views:Glyph Width="20" Height="20" Kind="{Binding Glyph}" Foreground="{DynamicResource Fluent.AccentText}"
+                                                             Visibility="{Binding HasLogo, Converter={StaticResource BoolToVis}, ConverterParameter=invert}" />
+                                            </Grid>
+                                            <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Name}" />
+                                                <TextBlock Style="{StaticResource Fluent.Caption}" Text="{Binding Detail}" />
+                                            </StackPanel>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Grid Margin="0,8,0,0" Visibility="{Binding IsCustomDns, Converter={StaticResource BoolToVis}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Style="{StaticResource Fluent.TextBox}" MaxLength="15"
+                                         Text="{Binding CustomDns1, UpdateSourceTrigger=PropertyChanged, Delay=400}"
+                                         views:FluentAssist.Placeholder="{Binding [dns_primary], Source={x:Static svc:Loc.Instance}}" />
+                                <TextBox Grid.Column="2" Style="{StaticResource Fluent.TextBox}" MaxLength="15"
+                                         Text="{Binding CustomDns2, UpdateSourceTrigger=PropertyChanged, Delay=400}"
+                                         views:FluentAssist.Placeholder="{Binding [dns_secondary], Source={x:Static svc:Loc.Instance}}" />
+                            </Grid>
+                            <views:InfoBar Margin="0,8,0,0" Severity="Error" Message="{Binding CustomDnsError}"
+                                           Visibility="{Binding CustomDnsError, Converter={StaticResource NonEmptyToVis}}" />
+                            <TextBlock Margin="0,6,0,0" Style="{StaticResource Fluent.Caption}" Text="{Binding [dns_block_note], Source={x:Static svc:Loc.Instance}}"
+                                       Visibility="{Binding UsesOwnDns, Converter={StaticResource BoolToVis}}" />
+                        </StackPanel>
+                    </views:SettingsCard.Footer>
+                </views:SettingsCard>
+                <!-- Connection settings changed while connected -->
+                <views:InfoBar Margin="0,0,0,4" Message="{Binding [settings_apply_next], Source={x:Static svc:Loc.Instance}}"
+                               Visibility="{Binding ConnectionSettingsPending, Converter={StaticResource BoolToVis}}">
+                    <Button Style="{StaticResource Fluent.AccentButton}" Command="{Binding ReconnectCommand}" Content="{Binding [reconnect_now], Source={x:Static svc:Loc.Instance}}" />
+                </views:InfoBar>
+            </StackPanel>
+
+            <StackPanel x:Name="RightPanel" Grid.Row="1" Grid.Column="2">
+                <!-- About -->
+                <TextBlock Style="{StaticResource Fluent.SectionHeader}" Text="{Binding [about], Source={x:Static svc:Loc.Instance}}" />
+                <Border Style="{StaticResource SectionCard}">
+                    <StackPanel>
+                        <DockPanel>
+                            <Image DockPanel.Dock="Left" Source="/STGPhantomVPN;component/Assets/app-icon.png" Width="44" Height="44" RenderOptions.BitmapScalingMode="HighQuality" />
+                            <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Style="{StaticResource Fluent.BodyStrong}" Text="{Binding [app_name], Source={x:Static svc:Loc.Instance}}" />
+                                <TextBlock Style="{StaticResource Fluent.Caption}" Text="{Binding VersionText}" />
+                            </StackPanel>
+                        </DockPanel>
+                        <Rectangle Height="1" Margin="0,12" Fill="{DynamicResource Fluent.Divider}" />
+                        <TextBlock FontWeight="SemiBold" Text="{Binding [vpn_engine], Source={x:Static svc:Loc.Instance}}" />
+                        <TextBlock Style="{StaticResource Fluent.Caption}" Text="{Binding [vpn_engine_body], Source={x:Static svc:Loc.Instance}}" />
+                        <TextBlock Margin="0,4,0,0" Style="{StaticResource Fluent.Caption}" Text="{Binding OpenVpnStatusText}" />
+                        <TextBlock Style="{StaticResource Fluent.Caption}" Text="{Binding TapStatusText}" />
+                        <TextBlock Margin="0,12,0,0" FontWeight="SemiBold" Text="{Binding [system_section], Source={x:Static svc:Loc.Instance}}" />
+                        <TextBlock Style="{StaticResource Fluent.Caption}" Text="{Binding OsText}" />
+                        <Button Margin="0,8,0,0" HorizontalAlignment="Left" Command="{Binding ShowPrereqCommand}"
+                                Content="{Binding [prereq_show], Source={x:Static svc:Loc.Instance}}"
+                                Visibility="{Binding HasPrereqIssues, Converter={StaticResource BoolToVis}}" />
+                        <TextBlock Margin="0,12,0,0" FontWeight="SemiBold" Text="{Binding [privacy_note], Source={x:Static svc:Loc.Instance}}" />
+                        <TextBlock Style="{StaticResource Fluent.Caption}" Text="{Binding [privacy_note_body], Source={x:Static svc:Loc.Instance}}" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Logs and licenses -->
+                <views:SettingsCard Icon="Log" Header="{Binding [logs_section], Source={x:Static svc:Loc.Instance}}"
+                                    Description="{Binding [logs_section_summary], Source={x:Static svc:Loc.Instance}}">
+                    <views:SettingsCard.Footer>
+                        <StackPanel>
+                            <WrapPanel>
+                                <Button Margin="0,0,8,8" Command="{Binding ShowLogsCommand}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <views:Glyph Kind="Log" Width="16" Height="16" StrokeWeight="1.8" VerticalAlignment="Center" />
+                                        <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Text="{Binding [show_logs], Source={x:Static svc:Loc.Instance}}" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Margin="0,0,8,8" Command="{Binding ClearLogsCommand}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <views:Glyph Kind="Trash" Width="16" Height="16" StrokeWeight="1.8" VerticalAlignment="Center" />
+                                        <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Text="{Binding [log_clear], Source={x:Static svc:Loc.Instance}}" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Margin="0,0,8,8" Command="{Binding OpenLogsCommand}" Content="{Binding [open_logs], Source={x:Static svc:Loc.Instance}}" />
+                                <Button Margin="0,0,0,8" Command="{Binding OpenLicensesCommand}" Content="{Binding [open_licenses], Source={x:Static svc:Loc.Instance}}" />
+                            </WrapPanel>
+                            <TextBlock Style="{StaticResource Fluent.Caption}" Text="{Binding LogsMessage}"
+                                       Visibility="{Binding LogsMessage, Converter={StaticResource NonEmptyToVis}}" />
+                        </StackPanel>
+                    </views:SettingsCard.Footer>
+                </views:SettingsCard>
+
+                <!-- Credits -->
+                <views:SettingsExpander Icon="Heart" Padding="52,10,16,12" Header="{Binding [credits_heading], Source={x:Static svc:Loc.Instance}}"
+                                        Description="{Binding [credit_designer], Source={x:Static svc:Loc.Instance}}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Fluent.Caption}" Text="{Binding [credit_vpngate], Source={x:Static svc:Loc.Instance}}" />
+                        <TextBlock Margin="0,4,0,0" Style="{StaticResource Fluent.Caption}" Text="{Binding [credit_openvpn], Source={x:Static svc:Loc.Instance}}" />
+                        <TextBlock Margin="0,4,0,0" Style="{StaticResource Fluent.Caption}" Text="{Binding [credit_flags], Source={x:Static svc:Loc.Instance}}" />
+                        <TextBlock Margin="0,4,0,0" Style="{StaticResource Fluent.Caption}" Text="{Binding [credit_dns], Source={x:Static svc:Loc.Instance}}" />
+                    </StackPanel>
+                </views:SettingsExpander>
+            </StackPanel>
+
+            <views:DesignerCredits Grid.Row="3" Grid.ColumnSpan="3" Margin="0,12,0,8" />
+        </Grid>
+    </ScrollViewer>
+</UserControl>

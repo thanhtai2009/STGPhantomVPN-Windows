@@ -1,0 +1,15 @@
+bin/
+obj/
+out/
+*.user
+.vs/
+*.zip
+# Signing material never lives in this repository.
+*.pfx
+*.p12
+*.snk
+*.key
+*.pem
+*.cer
+*.spc
+*.pvk

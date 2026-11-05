@@ -1,0 +1,94 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- WinUI 3 (Windows 11 Fluent) light theme tokens, with the STG teal as accent. Keep the keys in sync with the other theme file. -->
+    <SolidColorBrush x:Key="Fluent.WindowBg" Color="#FFF3F3F3" />
+    <Color x:Key="Fluent.WindowBg.Color">#FFF3F3F3</Color>
+    <SolidColorBrush x:Key="Fluent.LayerBg" Color="#80FFFFFF" />
+    <Color x:Key="Fluent.LayerBg.Color">#80FFFFFF</Color>
+    <SolidColorBrush x:Key="Fluent.CardBg" Color="#B3FFFFFF" />
+    <Color x:Key="Fluent.CardBg.Color">#B3FFFFFF</Color>
+    <SolidColorBrush x:Key="Fluent.CardBgSecondary" Color="#80F6F6F6" />
+    <Color x:Key="Fluent.CardBgSecondary.Color">#80F6F6F6</Color>
+    <SolidColorBrush x:Key="Fluent.CardStroke" Color="#0F000000" />
+    <Color x:Key="Fluent.CardStroke.Color">#0F000000</Color>
+    <SolidColorBrush x:Key="Fluent.CardStrokeSolid" Color="#FFE5E5E5" />
+    <Color x:Key="Fluent.CardStrokeSolid.Color">#FFE5E5E5</Color>
+    <SolidColorBrush x:Key="Fluent.Divider" Color="#14000000" />
+    <Color x:Key="Fluent.Divider.Color">#14000000</Color>
+    <SolidColorBrush x:Key="Fluent.Text" Color="#E4000000" />
+    <Color x:Key="Fluent.Text.Color">#E4000000</Color>
+    <SolidColorBrush x:Key="Fluent.TextSecondary" Color="#9E000000" />
+    <Color x:Key="Fluent.TextSecondary.Color">#9E000000</Color>
+    <SolidColorBrush x:Key="Fluent.TextTertiary" Color="#72000000" />
+    <Color x:Key="Fluent.TextTertiary.Color">#72000000</Color>
+    <SolidColorBrush x:Key="Fluent.TextDisabled" Color="#5C000000" />
+    <Color x:Key="Fluent.TextDisabled.Color">#5C000000</Color>
+    <SolidColorBrush x:Key="Fluent.Accent" Color="#FF0B7A70" />
+    <Color x:Key="Fluent.Accent.Color">#FF0B7A70</Color>
+    <SolidColorBrush x:Key="Fluent.AccentHover" Color="#E60B7A70" />
+    <Color x:Key="Fluent.AccentHover.Color">#E60B7A70</Color>
+    <SolidColorBrush x:Key="Fluent.AccentPressed" Color="#CC0B7A70" />
+    <Color x:Key="Fluent.AccentPressed.Color">#CC0B7A70</Color>
+    <SolidColorBrush x:Key="Fluent.AccentDisabled" Color="#37000000" />
+    <Color x:Key="Fluent.AccentDisabled.Color">#37000000</Color>
+    <SolidColorBrush x:Key="Fluent.TextOnAccent" Color="#FFFFFFFF" />
+    <Color x:Key="Fluent.TextOnAccent.Color">#FFFFFFFF</Color>
+    <SolidColorBrush x:Key="Fluent.AccentText" Color="#FF0B7A70" />
+    <Color x:Key="Fluent.AccentText.Color">#FF0B7A70</Color>
+    <SolidColorBrush x:Key="Fluent.AccentSubtle" Color="#1A0E9688" />
+    <Color x:Key="Fluent.AccentSubtle.Color">#1A0E9688</Color>
+    <SolidColorBrush x:Key="Fluent.ControlFill" Color="#B3FFFFFF" />
+    <Color x:Key="Fluent.ControlFill.Color">#B3FFFFFF</Color>
+    <SolidColorBrush x:Key="Fluent.ControlFillHover" Color="#80F9F9F9" />
+    <Color x:Key="Fluent.ControlFillHover.Color">#80F9F9F9</Color>
+    <SolidColorBrush x:Key="Fluent.ControlFillPressed" Color="#4DF9F9F9" />
+    <Color x:Key="Fluent.ControlFillPressed.Color">#4DF9F9F9</Color>
+    <SolidColorBrush x:Key="Fluent.ControlFillInput" Color="#FFFFFFFF" />
+    <Color x:Key="Fluent.ControlFillInput.Color">#FFFFFFFF</Color>
+    <SolidColorBrush x:Key="Fluent.ControlStroke" Color="#0F000000" />
+    <Color x:Key="Fluent.ControlStroke.Color">#0F000000</Color>
+    <SolidColorBrush x:Key="Fluent.ControlStrokeStrong" Color="#29000000" />
+    <Color x:Key="Fluent.ControlStrokeStrong.Color">#29000000</Color>
+    <SolidColorBrush x:Key="Fluent.ControlStrongStroke" Color="#9C000000" />
+    <Color x:Key="Fluent.ControlStrongStroke.Color">#9C000000</Color>
+    <SolidColorBrush x:Key="Fluent.SubtleHover" Color="#09000000" />
+    <Color x:Key="Fluent.SubtleHover.Color">#09000000</Color>
+    <SolidColorBrush x:Key="Fluent.SubtlePressed" Color="#06000000" />
+    <Color x:Key="Fluent.SubtlePressed.Color">#06000000</Color>
+    <SolidColorBrush x:Key="Fluent.ToggleKnobOn" Color="#FFFFFFFF" />
+    <Color x:Key="Fluent.ToggleKnobOn.Color">#FFFFFFFF</Color>
+    <SolidColorBrush x:Key="Fluent.Flyout" Color="#FFF9F9F9" />
+    <Color x:Key="Fluent.Flyout.Color">#FFF9F9F9</Color>
+    <SolidColorBrush x:Key="Fluent.FlyoutStroke" Color="#0F000000" />
+    <Color x:Key="Fluent.FlyoutStroke.Color">#0F000000</Color>
+    <SolidColorBrush x:Key="Fluent.Dialog" Color="#FFFFFFFF" />
+    <Color x:Key="Fluent.Dialog.Color">#FFFFFFFF</Color>
+    <SolidColorBrush x:Key="Fluent.DialogFooter" Color="#FFF3F3F3" />
+    <Color x:Key="Fluent.DialogFooter.Color">#FFF3F3F3</Color>
+    <SolidColorBrush x:Key="Fluent.Smoke" Color="#4D000000" />
+    <Color x:Key="Fluent.Smoke.Color">#4D000000</Color>
+    <SolidColorBrush x:Key="Fluent.Success" Color="#FF0F7B0F" />
+    <Color x:Key="Fluent.Success.Color">#FF0F7B0F</Color>
+    <SolidColorBrush x:Key="Fluent.Caution" Color="#FF9D5D00" />
+    <Color x:Key="Fluent.Caution.Color">#FF9D5D00</Color>
+    <SolidColorBrush x:Key="Fluent.Critical" Color="#FFC42B1C" />
+    <Color x:Key="Fluent.Critical.Color">#FFC42B1C</Color>
+    <SolidColorBrush x:Key="Fluent.Neutral" Color="#FF8A8A8A" />
+    <Color x:Key="Fluent.Neutral.Color">#FF8A8A8A</Color>
+    <SolidColorBrush x:Key="Fluent.SuccessBg" Color="#FFDFF6DD" />
+    <Color x:Key="Fluent.SuccessBg.Color">#FFDFF6DD</Color>
+    <SolidColorBrush x:Key="Fluent.CautionBg" Color="#FFFFF4CE" />
+    <Color x:Key="Fluent.CautionBg.Color">#FFFFF4CE</Color>
+    <SolidColorBrush x:Key="Fluent.CriticalBg" Color="#FFFDE7E9" />
+    <Color x:Key="Fluent.CriticalBg.Color">#FFFDE7E9</Color>
+    <SolidColorBrush x:Key="Fluent.InfoBg" Color="#80F6F6F6" />
+    <Color x:Key="Fluent.InfoBg.Color">#80F6F6F6</Color>
+    <SolidColorBrush x:Key="Fluent.InfoIcon" Color="#FF0B7A70" />
+    <Color x:Key="Fluent.InfoIcon.Color">#FF0B7A70</Color>
+    <SolidColorBrush x:Key="Fluent.Connected" Color="#FF0F7B0F" />
+    <Color x:Key="Fluent.Connected.Color">#FF0F7B0F</Color>
+    <SolidColorBrush x:Key="Fluent.ScrollThumb" Color="#72000000" />
+    <Color x:Key="Fluent.ScrollThumb.Color">#72000000</Color>
+    <SolidColorBrush x:Key="Fluent.WindowStroke" Color="#FFB4B4B4" />
+    <Color x:Key="Fluent.WindowStroke.Color">#FFB4B4B4</Color>
+</ResourceDictionary>

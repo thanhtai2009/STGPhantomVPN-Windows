@@ -1,0 +1,146 @@
+<UserControl x:Class="STGPhantomVPN.Views.ServersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:svc="clr-namespace:STGPhantomVPN.Services"
+             xmlns:core="clr-namespace:STGPhantomVPN.Core"
+             xmlns:views="clr-namespace:STGPhantomVPN.Views"
+             x:Name="Root">
+    <Grid x:Name="Layout" Margin="32,20,32,6" MaxWidth="760">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock Style="{StaticResource Fluent.Title}"
+                       Text="{Binding [servers_title], Source={x:Static svc:Loc.Instance}}" />
+            <TextBlock Margin="0,2,0,0" Style="{StaticResource Muted}" Text="{Binding [servers_subtitle], Source={x:Static svc:Loc.Instance}}" />
+            <TextBlock Margin="0,2,0,0" Style="{StaticResource Fluent.Caption}" FontSize="11">
+                <Run Text="v" /><Run Text="{x:Static core:AppVersion.Current}" /><Run Text=" · " /><Run Text="{Binding ServerCountText, Mode=OneWay}" />
+            </TextBlock>
+        </StackPanel>
+
+        <!-- AutoSuggestBox-like search field with the query glyph on the right -->
+        <TextBox Grid.Row="1" Margin="0,12,0,0" Style="{StaticResource Fluent.TextBox}"
+                 Text="{Binding Query, UpdateSourceTrigger=PropertyChanged}"
+                 views:FluentAssist.Placeholder="{Binding [search_hint], Source={x:Static svc:Loc.Instance}}">
+            <TextBox.Tag>
+                <views:Glyph Kind="Search" Width="16" Height="16" StrokeWeight="1.8" Foreground="{DynamicResource Fluent.TextSecondary}" />
+            </TextBox.Tag>
+        </TextBox>
+
+        <!-- Sort chips; the update button (spinner while the background fetch runs) sits on the same row -->
+        <DockPanel Grid.Row="2" Margin="0,8,0,0">
+            <Button DockPanel.Dock="Right" Margin="8,0,0,6" VerticalAlignment="Center" Command="{Binding RefreshCommand}"
+                    views:FluentAssist.IsBusy="{Binding IsLoading}">
+                <StackPanel Orientation="Horizontal">
+                    <views:Glyph Kind="Refresh" Width="16" Height="16" VerticalAlignment="Center"
+                                 Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}, ConverterParameter=invert}" />
+                    <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Text="{Binding [servers_refresh], Source={x:Static svc:Loc.Instance}}" />
+                </StackPanel>
+            </Button>
+            <WrapPanel VerticalAlignment="Center">
+                <RadioButton Style="{StaticResource Fluent.Choice}" GroupName="sort"
+                             IsChecked="{Binding Sort, Converter={StaticResource EqualsParam}, ConverterParameter=Score}"
+                             Content="{Binding [sort_score], Source={x:Static svc:Loc.Instance}}" />
+                <RadioButton Style="{StaticResource Fluent.Choice}" GroupName="sort"
+                             IsChecked="{Binding Sort, Converter={StaticResource EqualsParam}, ConverterParameter=Ping}"
+                             Content="{Binding [sort_ping], Source={x:Static svc:Loc.Instance}}" />
+                <RadioButton Style="{StaticResource Fluent.Choice}" GroupName="sort"
+                             IsChecked="{Binding Sort, Converter={StaticResource EqualsParam}, ConverterParameter=Speed}"
+                             Content="{Binding [sort_speed], Source={x:Static svc:Loc.Instance}}" />
+                <RadioButton Style="{StaticResource Fluent.Choice}" GroupName="sort"
+                             IsChecked="{Binding Sort, Converter={StaticResource EqualsParam}, ConverterParameter=Country}"
+                             Content="{Binding [sort_country], Source={x:Static svc:Loc.Instance}}" />
+            </WrapPanel>
+        </DockPanel>
+
+        <views:InfoBar Grid.Row="3" Margin="0,4,0,0" Severity="Warning" Message="{Binding ServersError}"
+                       Visibility="{Binding HasServersError, Converter={StaticResource BoolToVis}}" />
+
+        <Grid Grid.Row="4" Margin="0,8,0,0">
+            <views:ProgressRing Width="40" Height="40" Foreground="{DynamicResource Fluent.Accent}"
+                                IsActive="{Binding ShowListSpinner}" Visibility="{Binding ShowListSpinner, Converter={StaticResource BoolToVis}}" />
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="24,0" Style="{StaticResource Muted}"
+                       Text="{Binding [no_servers], Source={x:Static svc:Loc.Instance}}"
+                       Visibility="{Binding ShowEmptyList, Converter={StaticResource BoolToVis}}" />
+
+            <!-- Card list, one card per server; clicking a card connects to it (Android onSelect) -->
+            <!-- One row of 1-3 cards per item (ServersView.xaml.cs picks the column count from the width); rows stay virtualized -->
+            <ListBox BorderThickness="0" Background="Transparent"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.ScrollUnit="Pixel">
+                <ListBox.ItemsSource>
+                    <MultiBinding Converter="{StaticResource ServerRows}">
+                        <Binding Path="FilteredServers" />
+                        <Binding Path="Columns" ElementName="Root" />
+                    </MultiBinding>
+                </ListBox.ItemsSource>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Padding" Value="0" />
+                        <Setter Property="Margin" Value="0,0,0,4" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <ItemsControl ItemsSource="{Binding}" Margin="-2,0">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Rows="1" Columns="{Binding Columns, ElementName=Root}" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type core:VpnServer}">
+                                    <Button Command="{Binding DataContext.ConnectServerCommand, ElementName=Root}" CommandParameter="{Binding}"
+                                            Style="{StaticResource Fluent.CardButton}" Padding="14,10" Margin="2,0"
+                                            ToolTip="{Binding Operator}">
+                                        <DockPanel>
+                                            <views:CountryBadge DockPanel.Dock="Left" Code="{Binding CountryCode}" />
+                                            <views:Glyph DockPanel.Dock="Right" Kind="CheckCircle" Width="20" Height="20" VerticalAlignment="Center"
+                                                         Foreground="{DynamicResource Fluent.AccentText}">
+                                                <views:Glyph.Visibility>
+                                                    <MultiBinding Converter="{StaticResource SameServer}">
+                                                        <Binding />
+                                                        <Binding Path="DataContext.SelectedServer" ElementName="Root" />
+                                                    </MultiBinding>
+                                                </views:Glyph.Visibility>
+                                            </views:Glyph>
+                                            <StackPanel Margin="12,0">
+                                                <TextBlock FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Text="{Binding CountryDisplay}" />
+                                                <TextBlock Style="{StaticResource Fluent.Caption}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis">
+                                                    <Run Text="{Binding DisplayName, Mode=OneWay}" /><Run Text=" · " /><Run Text="{Binding Ip, Mode=OneWay}" />
+                                                </TextBlock>
+                                                <TextBlock Style="{StaticResource Fluent.Caption}" FontSize="11" TextWrapping="NoWrap" Foreground="{DynamicResource Fluent.TextTertiary}">
+                                                    <Run Text="Ping " /><Run Text="{Binding PingText, Mode=OneWay}" /><Run Text=" · " /><Run Text="{Binding SpeedText, Mode=OneWay}" /><Run Text=" · " /><Run Text="{Binding [sort_score], Source={x:Static svc:Loc.Instance}, Mode=OneWay}" /><Run Text=" " /><Run Text="{Binding Score, Mode=OneWay}" />
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </DockPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+
+        <StackPanel Grid.Row="5">
+            <TextBlock Margin="0,6,0,0" HorizontalAlignment="Center" TextAlignment="Center" Style="{StaticResource Fluent.Caption}" FontSize="11"
+                       Text="{Binding [volunteer_disclaimer], Source={x:Static svc:Loc.Instance}}" />
+            <views:DesignerCredits Margin="0,6,0,4" />
+        </StackPanel>
+    </Grid>
+</UserControl>

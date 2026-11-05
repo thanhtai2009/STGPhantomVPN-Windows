@@ -1,0 +1,33 @@
+STG Phantom VPN 1.0.11 - third-party components
+======================================================================
+
+Shipped inside this package
+---------------------------
+flag-icons 7.6.0 (country flags, rendered to PNG and embedded in STGPhantomVPN.exe)
+  MIT License - flag-icons-LICENSE.txt
+  Copyright (c) 2013 Panayiotis Lipiridis. https://github.com/lipis/flag-icons
+
+DNS provider logos (Assets\Dns\*.png, 48 px, from each provider's own website icon, unmodified apart from scaling)
+  Shown only to identify the resolver in the DNS picker. Cloudflare, Google, Quad9, OpenDNS (Cisco) and AdGuard
+  names and logos are trademarks of their respective owners; STG Phantom VPN is not affiliated with or endorsed by them.
+
+VPNGate server list snapshot (Assets\vpngate_fallback.csv)
+  Public data from the VPN Gate Academic Experiment Project, University of Tsukuba.
+  https://www.vpngate.net/
+
+Installer only (STGPhantomVPN-Setup-*.exe)
+------------------------------------------
+Inno Setup 6.7.4 (setup and uninstall program around the files above)
+  Inno Setup License - InnoSetup-LICENSE.txt
+  Copyright (C) 1997-2026 Jordan Russell, portions Copyright (C) 2000-2026 Martijn Laan. https://jrsoftware.org/
+  Vietnamese and Chinese Simplified wizard translations: user-contributed files from
+  https://jrsoftware.org/files/istrans/ (same licence).
+
+Installed on demand from the official publisher (not modified, run as separate programs)
+----------------------------------------------------------------------------------------
+OpenVPN Community 2.6.23-I002 (openvpn.exe, openvpnserv.exe, TAP-Windows6, ovpn-dco-win on Windows 10 2004+, OpenSSL, LZO, LZ4, pkcs11-helper)
+  GNU GPL v2 with OpenSSL and Apache-2.0 linking exceptions - OpenVPN-COPYING.txt, OpenVPN-LICENSE.txt, GPL-2.0.txt
+  OpenSSL - Apache License 2.0 - OpenSSL-LICENSE.txt
+  TAP-Windows6 - tap-windows6-COPYING.txt
+  "OpenVPN" is a registered trademark of OpenVPN Inc. STG Phantom VPN is not affiliated with OpenVPN Inc.
+  See SOURCE-OFFER.txt for the corresponding source code.

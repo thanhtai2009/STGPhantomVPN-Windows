@@ -1,0 +1,246 @@
+<Window x:Class="STGPhantomVPN.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:svc="clr-namespace:STGPhantomVPN.Services"
+        xmlns:views="clr-namespace:STGPhantomVPN.Views"
+        Title="{Binding [app_name], Source={x:Static svc:Loc.Instance}}"
+        Width="720" Height="592" MinWidth="720" MinHeight="540"
+        WindowStartupLocation="CenterScreen"
+        Icon="Assets/app.ico"
+        Background="{DynamicResource Fluent.WindowBg}"
+        Foreground="{DynamicResource Fluent.Text}"
+        TextElement.Foreground="{DynamicResource Fluent.Text}"
+        TextElement.FontSize="14"
+        FontFamily="{StaticResource Fluent.Font}"
+        TextOptions.TextFormattingMode="Ideal"
+        UseLayoutRounding="True">
+    <!-- WinUI 3 NavigationView shell: integrated 40 DIP title bar (WindowBackdrop: Mica on Windows 11, solid
+         elsewhere), a left pane with icon-over-label items and a selection pill, and the page on a layer with a
+         rounded top-left corner. The caption buttons are the app's own. -->
+    <!-- 1 px window outline where Windows draws none around a custom frame (Windows 7/8/10, not maximized) -->
+    <Border x:Name="Frame" BorderThickness="1" BorderBrush="{DynamicResource Fluent.WindowStroke}">
+    <Grid x:Name="Shell">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Title bar: app icon and name; drag area everywhere except the caption buttons -->
+        <DockPanel Grid.ColumnSpan="2">
+            <StackPanel x:Name="CaptionButtons" DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Top"
+                        WindowChrome.IsHitTestVisibleInChrome="True">
+                <Button x:Name="MinimizeButton" Style="{StaticResource Fluent.CaptionButton}" Click="OnMinimize"
+                        ToolTip="{Binding [caption_minimize], Source={x:Static svc:Loc.Instance}}">
+                    <Path Data="M0,0.5 H10" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeThickness="1" SnapsToDevicePixels="True" />
+                </Button>
+                <Button x:Name="MaximizeButton" Style="{StaticResource Fluent.CaptionButton}" Click="OnMaximize"
+                        ToolTip="{Binding [caption_maximize], Source={x:Static svc:Loc.Instance}}">
+                    <Grid>
+                        <Rectangle x:Name="MaximizeGlyph" Width="10" Height="10" RadiusX="1.5" RadiusY="1.5" StrokeThickness="1" SnapsToDevicePixels="True"
+                                   Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
+                        <Path x:Name="RestoreGlyph" Visibility="Collapsed" StrokeThickness="1" SnapsToDevicePixels="True"
+                              Data="M2.5,0.5 H8 A1.5,1.5 0 0 1 9.5,2 V7.5 M0.5,3.5 A1,1 0 0 1 1.5,2.5 H6.5 A1,1 0 0 1 7.5,3.5 V8.5 A1,1 0 0 1 6.5,9.5 H1.5 A1,1 0 0 1 0.5,8.5 Z"
+                              Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
+                    </Grid>
+                </Button>
+                <Button x:Name="CloseButton" Style="{StaticResource Fluent.CloseCaptionButton}" Click="OnCloseButton"
+                        ToolTip="{Binding [caption_close], Source={x:Static svc:Loc.Instance}}">
+                    <Path Data="M0.5,0.5 L9.5,9.5 M9.5,0.5 L0.5,9.5" StrokeThickness="1"
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="16,0,0,0" VerticalAlignment="Center">
+                <Image Source="/STGPhantomVPN;component/Assets/app-icon.png" Width="16" Height="16" RenderOptions.BitmapScalingMode="HighQuality" />
+                <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" FontSize="12"
+                           Text="{Binding [app_name], Source={x:Static svc:Loc.Instance}}" />
+            </StackPanel>
+        </DockPanel>
+
+        <!-- Navigation pane -->
+        <StackPanel Grid.Row="1" Margin="0,4,0,0">
+            <RadioButton Style="{StaticResource Fluent.NavItem}" GroupName="nav"
+                         IsChecked="{Binding SelectedTab, Converter={StaticResource TabIs}, ConverterParameter=0}">
+                <StackPanel>
+                    <views:Glyph Kind="Home" Width="20" Height="20" StrokeWeight="1.6" HorizontalAlignment="Center" />
+                    <TextBlock Margin="0,4,0,0" FontSize="11" HorizontalAlignment="Center" Text="{Binding [nav_home], Source={x:Static svc:Loc.Instance}}" />
+                </StackPanel>
+            </RadioButton>
+            <RadioButton Style="{StaticResource Fluent.NavItem}" GroupName="nav"
+                         IsChecked="{Binding SelectedTab, Converter={StaticResource TabIs}, ConverterParameter=1}">
+                <StackPanel>
+                    <views:Glyph Kind="Servers" Width="20" Height="20" StrokeWeight="1.6" HorizontalAlignment="Center" />
+                    <TextBlock Margin="0,4,0,0" FontSize="11" HorizontalAlignment="Center" Text="{Binding [nav_servers], Source={x:Static svc:Loc.Instance}}" />
+                </StackPanel>
+            </RadioButton>
+            <RadioButton Style="{StaticResource Fluent.NavItem}" GroupName="nav"
+                         IsChecked="{Binding SelectedTab, Converter={StaticResource TabIs}, ConverterParameter=2}">
+                <StackPanel>
+                    <views:Glyph Kind="Settings" Width="20" Height="20" StrokeWeight="1.6" HorizontalAlignment="Center" />
+                    <TextBlock Margin="0,4,0,0" FontSize="11" HorizontalAlignment="Center" Text="{Binding [nav_settings], Source={x:Static svc:Loc.Instance}}" />
+                </StackPanel>
+            </RadioButton>
+        </StackPanel>
+
+        <!-- Page layer; dialogs (ContentDialog style) open over it -->
+        <Border x:Name="PageLayer" Grid.Row="1" Grid.Column="1" CornerRadius="8,0,0,0" BorderThickness="1,1,0,0"
+                Background="{DynamicResource Fluent.LayerBg}" BorderBrush="{DynamicResource Fluent.CardStroke}">
+            <views:DialogHost IsOpen="{Binding TapDialogOpen}">
+                <views:DialogHost.DialogContent>
+                    <StackPanel MaxWidth="480">
+                        <ScrollViewer MaxHeight="{DynamicResource DialogMaxHeight}" VerticalScrollBarVisibility="Auto">
+                            <StackPanel Margin="24,24,24,20">
+                                <DockPanel>
+                                    <views:Glyph DockPanel.Dock="Left" Width="24" Height="24" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="{DynamicResource Fluent.AccentText}">
+                                        <views:Glyph.Style>
+                                            <Style TargetType="views:Glyph">
+                                                <Setter Property="Kind" Value="Adapter" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding TapDone}" Value="True">
+                                                        <Setter Property="Kind" Value="CheckCircle" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </views:Glyph.Style>
+                                    </views:Glyph>
+                                    <TextBlock Style="{StaticResource Fluent.Subtitle}" Text="{Binding TapDialogTitle}" />
+                                </DockPanel>
+                                <TextBlock Margin="0,12,0,0" Style="{StaticResource Fluent.Body}" Text="{Binding TapDialogBody}" />
+                                <StackPanel Visibility="{Binding TapDone, Converter={StaticResource BoolToVis}, ConverterParameter=invert}">
+                                    <TextBlock Margin="0,12,0,0" FontWeight="SemiBold" TextWrapping="Wrap"
+                                               Text="{Binding [tap_confirm_question], Source={x:Static svc:Loc.Instance}}" />
+                                    <TextBlock Margin="0,4,0,0" Style="{StaticResource Fluent.Caption}"
+                                               Text="{Binding [tap_later_note], Source={x:Static svc:Loc.Instance}}" />
+                                </StackPanel>
+                                <ProgressBar Margin="0,16,0,0" Style="{StaticResource Fluent.ProgressBar}"
+                                             Visibility="{Binding IsTapBusy, Converter={StaticResource BoolToVis}}" />
+                                <views:InfoBar Margin="0,12,0,0" Message="{Binding TapMessage}"
+                                               Visibility="{Binding HasTapMessage, Converter={StaticResource BoolToVis}}">
+                                    <views:InfoBar.Style>
+                                        <Style TargetType="views:InfoBar" BasedOn="{StaticResource {x:Type views:InfoBar}}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding TapMessageIsError}" Value="True">
+                                                    <Setter Property="Severity" Value="Error" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </views:InfoBar.Style>
+                                </views:InfoBar>
+                            </StackPanel>
+                        </ScrollViewer>
+                        <Border Padding="24" CornerRadius="0,0,8,8" Background="{DynamicResource Fluent.DialogFooter}" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource Fluent.CardStroke}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Command="{Binding TapDismissCommand}" MinWidth="96"
+                                        Visibility="{Binding TapDone, Converter={StaticResource BoolToVis}, ConverterParameter=invert}"
+                                        Content="{Binding [tap_later_action], Source={x:Static svc:Loc.Instance}}" />
+                                <Button Style="{StaticResource Fluent.AccentButton}" Margin="8,0,0,0" MinWidth="96" Command="{Binding TapRepairCommand}"
+                                        Visibility="{Binding TapDone, Converter={StaticResource BoolToVis}, ConverterParameter=invert}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <views:Glyph Kind="ShieldLock" Width="16" Height="16" VerticalAlignment="Center" />
+                                        <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Text="{Binding TapActionLabel}" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Style="{StaticResource Fluent.AccentButton}" MinWidth="96" Command="{Binding TapDismissCommand}"
+                                        Visibility="{Binding TapDone, Converter={StaticResource BoolToVis}}"
+                                        Content="{Binding [close_action], Source={x:Static svc:Loc.Instance}}" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </views:DialogHost.DialogContent>
+
+                <views:DialogHost IsOpen="{Binding TimeoutDialogOpen}">
+                    <views:DialogHost.DialogContent>
+                        <StackPanel MaxWidth="480">
+                            <StackPanel Margin="24,24,24,20">
+                                <DockPanel>
+                                    <views:Glyph DockPanel.Dock="Left" Kind="Timer" Width="24" Height="24" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="{DynamicResource Fluent.AccentText}" />
+                                    <TextBlock Style="{StaticResource Fluent.Subtitle}" Text="{Binding [connect_timeout_title], Source={x:Static svc:Loc.Instance}}" />
+                                </DockPanel>
+                                <TextBlock Margin="0,12,0,0" Style="{StaticResource Fluent.Body}" Text="{Binding TimeoutMessage}" />
+                                <TextBlock Margin="0,8,0,0" FontSize="13">
+                                    <Hyperlink Command="{Binding ShowLogsCommand}">
+                                        <Run Text="{Binding [show_logs], Source={x:Static svc:Loc.Instance}, Mode=OneWay}" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
+                            <Border Padding="24" CornerRadius="0,0,8,8" Background="{DynamicResource Fluent.DialogFooter}" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource Fluent.CardStroke}">
+                                <WrapPanel HorizontalAlignment="Right">
+                                    <Button Margin="0,0,8,0" Command="{Binding TimeoutCancelCommand}" Content="{Binding [cancel_action], Source={x:Static svc:Loc.Instance}}" />
+                                    <Button Margin="0,0,8,0" Command="{Binding TimeoutServerListCommand}" Content="{Binding [connect_timeout_server_list], Source={x:Static svc:Loc.Instance}}" />
+                                    <Button Style="{StaticResource Fluent.AccentButton}" Command="{Binding TryAnotherServerCommand}"
+                                            Content="{Binding [connect_timeout_another], Source={x:Static svc:Loc.Instance}}" />
+                                </WrapPanel>
+                            </Border>
+                        </StackPanel>
+                    </views:DialogHost.DialogContent>
+
+                    <views:DialogHost IsOpen="{Binding PrereqDialogOpen}">
+                        <views:DialogHost.DialogContent>
+                            <StackPanel MaxWidth="520">
+                                <ScrollViewer MaxHeight="{DynamicResource DialogMaxHeight}" VerticalScrollBarVisibility="Auto">
+                                    <StackPanel Margin="24,24,24,20">
+                                        <DockPanel>
+                                            <views:Glyph DockPanel.Dock="Left" Kind="Windows" Width="24" Height="24" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="{DynamicResource Fluent.AccentText}" />
+                                            <TextBlock Style="{StaticResource Fluent.Subtitle}" Text="{Binding PrereqDialogTitle}" />
+                                        </DockPanel>
+                                        <TextBlock Margin="0,12,0,0" Style="{StaticResource Fluent.Body}" Text="{Binding PrereqDialogBody}"
+                                                   Visibility="{Binding PrerequisitesBlock, Converter={StaticResource BoolToVis}}" />
+                                        <ItemsControl Margin="0,8,0,0" ItemsSource="{Binding PrereqUpdates}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Style="{StaticResource SectionCard}" Margin="0,4,0,0" Padding="14,10">
+                                                        <DockPanel>
+                                                            <Button DockPanel.Dock="Right" VerticalAlignment="Center" Margin="12,0,0,0"
+                                                                    Command="{Binding DataContext.OpenUpdateLinkCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                    CommandParameter="{Binding Url}" ToolTip="{Binding Url}">
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <views:Glyph Kind="OpenInNew" Width="16" Height="16" VerticalAlignment="Center" />
+                                                                    <TextBlock Margin="6,0,0,0" VerticalAlignment="Center" Text="{Binding [prereq_open_catalog], Source={x:Static svc:Loc.Instance}}" />
+                                                                </StackPanel>
+                                                            </Button>
+                                                            <StackPanel VerticalAlignment="Center">
+                                                                <TextBlock FontWeight="SemiBold" Text="{Binding Kb}" />
+                                                                <TextBlock Style="{StaticResource Fluent.Caption}" Text="{Binding Description}" />
+                                                            </StackPanel>
+                                                        </DockPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                        <views:InfoBar Margin="0,12,0,0" Severity="Warning" Message="{Binding PrereqRootWarning}"
+                                                       Visibility="{Binding HasPrereqRootWarning, Converter={StaticResource BoolToVis}}" />
+                                        <ProgressBar Margin="0,16,0,0" Style="{StaticResource Fluent.ProgressBar}"
+                                                     Visibility="{Binding IsPrereqBusy, Converter={StaticResource BoolToVis}}" />
+                                        <TextBlock Margin="0,8,0,0" Style="{StaticResource Muted}" Text="{Binding PrereqMessage}"
+                                                   Visibility="{Binding HasPrereqMessage, Converter={StaticResource BoolToVis}}" />
+                                    </StackPanel>
+                                </ScrollViewer>
+                                <Border Padding="24" CornerRadius="0,0,8,8" Background="{DynamicResource Fluent.DialogFooter}" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource Fluent.CardStroke}">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button MinWidth="96" Command="{Binding PrereqDismissCommand}" Content="{Binding [close_action], Source={x:Static svc:Loc.Instance}}" />
+                                        <Button Style="{StaticResource Fluent.AccentButton}" Margin="8,0,0,0" MinWidth="96" Command="{Binding PrereqRecheckCommand}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <views:Glyph Kind="Refresh" Width="16" Height="16" VerticalAlignment="Center" />
+                                                <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Text="{Binding [prereq_recheck], Source={x:Static svc:Loc.Instance}}" />
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </views:DialogHost.DialogContent>
+
+                        <Grid>
+                            <views:HomeView Visibility="{Binding SelectedTab, Converter={StaticResource TabIs}, ConverterParameter=0}" />
+                            <views:ServersView Visibility="{Binding SelectedTab, Converter={StaticResource TabIs}, ConverterParameter=1}" />
+                            <views:SettingsView Visibility="{Binding SelectedTab, Converter={StaticResource TabIs}, ConverterParameter=2}" />
+                        </Grid>
+                    </views:DialogHost>
+                </views:DialogHost>
+            </views:DialogHost>
+        </Border>
+    </Grid>
+    </Border>
+</Window>

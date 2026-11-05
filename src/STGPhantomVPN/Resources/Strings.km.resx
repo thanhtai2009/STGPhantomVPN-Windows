@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="app_name" xml:space="preserve"><value>STG Phantom VPN</value></data>
+  <data name="credits" xml:space="preserve"><value>រចនាដោយ TaiNT13@PNC STG</value></data>
+  <data name="nav_home" xml:space="preserve"><value>ទំព័រដើម</value></data>
+  <data name="nav_servers" xml:space="preserve"><value>ម៉ាស៊ីនមេ</value></data>
+  <data name="nav_settings" xml:space="preserve"><value>ការកំណត់</value></data>
+  <data name="status_connected" xml:space="preserve"><value>បានភ្ជាប់</value></data>
+  <data name="status_not_connected" xml:space="preserve"><value>មិនបានភ្ជាប់</value></data>
+  <data name="status_connecting" xml:space="preserve"><value>កំពុងភ្ជាប់</value></data>
+  <data name="status_disconnecting" xml:space="preserve"><value>កំពុងផ្ដាច់</value></data>
+  <data name="status_server_refused" xml:space="preserve"><value>ម៉ាស៊ីនមេបានបដិសេធការតភ្ជាប់</value></data>
+  <data name="status_error" xml:space="preserve"><value>កំហុស</value></data>
+  <data name="subtitle_connected" xml:space="preserve"><value>អ្នកបានភ្ជាប់ទៅម៉ាស៊ីនមេ VPNGate សាធារណៈ</value></data>
+  <data name="subtitle_ready" xml:space="preserve"><value>រួចរាល់សម្រាប់ការភ្ជាប់</value></data>
+  <data name="subtitle_connecting" xml:space="preserve"><value>កំពុងបង្កើតការតភ្ជាប់…</value></data>
+  <data name="subtitle_disconnecting" xml:space="preserve"><value>កំពុងបិទ tunnel…</value></data>
+  <data name="no_server" xml:space="preserve"><value>មិនទាន់ជ្រើសម៉ាស៊ីនមេ</value></data>
+  <data name="tap_to_choose" xml:space="preserve"><value>ចុចដើម្បីជ្រើសរើស</value></data>
+  <data name="connection_time" xml:space="preserve"><value>រយៈពេលតភ្ជាប់</value></data>
+  <data name="data_transferred" xml:space="preserve"><value>ទិន្នន័យបានផ្ទេរ</value></data>
+  <data name="download_speed" xml:space="preserve"><value>ទាញយក</value></data>
+  <data name="upload_speed" xml:space="preserve"><value>ផ្ទុកឡើង</value></data>
+  <data name="connect" xml:space="preserve"><value>ភ្ជាប់</value></data>
+  <data name="disconnect" xml:space="preserve"><value>ផ្ដាច់</value></data>
+  <data name="connecting_ellipsis" xml:space="preserve"><value>កំពុងភ្ជាប់…</value></data>
+  <data name="servers_title" xml:space="preserve"><value>ម៉ាស៊ីនមេ</value></data>
+  <data name="servers_subtitle" xml:space="preserve"><value>បញ្ជីមិនពេញលេញ ដោយសាររបៀបដំណើរការរបស់ VPNGate</value></data>
+  <data name="servers_refresh" xml:space="preserve"><value>ធ្វើបច្ចុប្បន្នភាព</value></data>
+  <data name="search_hint" xml:space="preserve"><value>ស្វែងរកប្រទេស ម៉ាស៊ីន IP…</value></data>
+  <data name="sort_score" xml:space="preserve"><value>ពិន្ទុ</value></data>
+  <data name="sort_ping" xml:space="preserve"><value>Ping</value></data>
+  <data name="sort_speed" xml:space="preserve"><value>ល្បឿន</value></data>
+  <data name="sort_country" xml:space="preserve"><value>ប្រទេស</value></data>
+  <data name="servers_count" xml:space="preserve"><value>ម៉ាស៊ីនមេ {0}</value></data>
+  <data name="no_servers" xml:space="preserve"><value>គ្មានម៉ាស៊ីនមេទេ។ ចុច «ធ្វើបច្ចុប្បន្នភាព» ដើម្បីផ្ទុកបញ្ជី VPNGate ឡើងវិញ។</value></data>
+  <data name="volunteer_disclaimer" xml:space="preserve"><value>ម៉ាស៊ីនមេខ្លះអាចនឹងមិនដំណើរការ ព្រោះទាំងនេះជាម៉ាស៊ីនមេ VPN សាធារណៈដែលដំណើរការដោយអ្នកស្ម័គ្រចិត្ត។</value></data>
+  <data name="error_select_server" xml:space="preserve"><value>សូមជ្រើសរើសម៉ាស៊ីនមេជាមុនសិន</value></data>
+  <data name="error_invalid_config" xml:space="preserve"><value>ការកំណត់ OpenVPN មិនត្រឹមត្រូវ</value></data>
+  <data name="error_connect_failed" xml:space="preserve"><value>ការតភ្ជាប់បរាជ័យ</value></data>
+  <data name="error_auth_failed" xml:space="preserve"><value>ម៉ាស៊ីនមេទាមទារគណនី ហើយបានបដិសេធគណនី vpn/vpn របស់ VPNGate។ សូមជ្រើសម៉ាស៊ីនមេផ្សេង។</value></data>
+  <data name="error_openvpn_missing" xml:space="preserve"><value>មិនទាន់បានដំឡើង OpenVPN 2.6 ទេ។ សូមដំឡើងពីផ្ទាំង «ទំព័រដើម» រួចព្យាយាមម្ដងទៀត។</value></data>
+  <data name="error_driver_missing" xml:space="preserve"><value>គ្មាន network adapter សម្រាប់ VPN ដែលអាចប្រើបាន (TAP-Windows6 / Wintun / ovpn-dco)។ សូមដំឡើង OpenVPN ឡើងវិញ រួមទាំង driver របស់វា។</value></data>
+  <data name="error_service_missing" xml:space="preserve"><value>OpenVPN Interactive Service មិនកំពុងដំណើរការទេ។ សូមដំឡើង OpenVPN ឡើងវិញពីផ្ទាំង «ទំព័រដើម» ឬចាប់ផ្ដើមសេវា "OpenVPNServiceInteractive"។</value></data>
+  <data name="error_connection_lost" xml:space="preserve"><value>ការតភ្ជាប់ VPN បានដាច់។ សូមភ្ជាប់ម្ដងទៀត ឬជ្រើសរើសម៉ាស៊ីនមេផ្សេង។</value></data>
+  <data name="error_load_servers" xml:space="preserve"><value>មិនអាចផ្ទុកម៉ាស៊ីនមេ VPNGate បានទេ</value></data>
+  <data name="error_load_servers_timeout" xml:space="preserve"><value>ការផ្ទុកម៉ាស៊ីនមេ VPNGate អស់ពេល។ សូមពិនិត្យការតភ្ជាប់របស់អ្នក រួចចុច «ធ្វើបច្ចុប្បន្នភាព»។</value></data>
+  <data name="refreshing_servers_before_connect" xml:space="preserve"><value>កំពុងផ្ទុកបញ្ជីម៉ាស៊ីនមេឡើងវិញ មុនពេលភ្ជាប់…</value></data>
+  <data name="connect_timeout_title" xml:space="preserve"><value>ការតភ្ជាប់អស់ពេល</value></data>
+  <data name="connect_timeout_message" xml:space="preserve"><value>មិនអាចភ្ជាប់ទៅ {0} ក្នុងរយៈពេល {1} វិនាទីបានទេ។ ម៉ាស៊ីនមេអាចផ្ទុកលើសចំណុះ ឬត្រូវបានរារាំងនៅលើបណ្ដាញរបស់អ្នក។ សូមសាកល្បងភ្ជាប់តាមម៉ាស៊ីនមេផ្សេង។</value></data>
+  <data name="connect_timeout_another" xml:space="preserve"><value>សាកល្បងម៉ាស៊ីនមេផ្សេង</value></data>
+  <data name="connect_timeout_server_list" xml:space="preserve"><value>បញ្ជីម៉ាស៊ីនមេ</value></data>
+  <data name="cancel_action" xml:space="preserve"><value>បោះបង់</value></data>
+  <data name="connect_timeout_no_other" xml:space="preserve"><value>គ្មានម៉ាស៊ីនមេផ្សេងទៀតដែលអាចប្រើបានទេ។ សូមផ្ទុកបញ្ជីម៉ាស៊ីនមេឡើងវិញ រួចព្យាយាមម្ដងទៀត។</value></data>
+  <data name="openvpn_card_title" xml:space="preserve"><value>ត្រូវការ OpenVPN</value></data>
+  <data name="openvpn_card_body" xml:space="preserve"><value>STG Phantom VPN ប្រើកម្មវិធី OpenVPN Community 2.6 ផ្លូវការ និង driver បណ្ដាញរបស់វា (TAP-Windows6, Wintun, ovpn-dco)។ កម្មវិធីដំឡើងត្រូវបានទាញយកពី openvpn.net ហើយពិនិត្យដោយ SHA-256 មុនពេលដំណើរការ។</value></data>
+  <data name="openvpn_install" xml:space="preserve"><value>ដំឡើង OpenVPN {0}</value></data>
+  <data name="installing" xml:space="preserve"><value>កំពុងដំឡើង…</value></data>
+  <data name="downloading" xml:space="preserve"><value>កំពុងទាញយក… {0}%</value></data>
+  <data name="install_download_failed" xml:space="preserve"><value>ការទាញយកបរាជ័យ។ សូមពិនិត្យការតភ្ជាប់អ៊ីនធឺណិត រួចព្យាយាមម្ដងទៀត។</value></data>
+  <data name="install_hash_mismatch" xml:space="preserve"><value>កម្មវិធីដំឡើងដែលបានទាញយកមិនត្រូវនឹង SHA-256 ដែលរំពឹងទុក ហើយត្រូវបានលុបចោល។</value></data>
+  <data name="install_msi_failed" xml:space="preserve"><value>ការដំឡើងមិនបានបញ្ចប់ទេ។ សូមព្យាយាមម្ដងទៀត ឬដំឡើងដោយដៃ។</value></data>
+  <data name="install_uac_declined" xml:space="preserve"><value>មិនបានផ្ដល់សិទ្ធិអ្នកគ្រប់គ្រង (Administrator) ទេ ដូច្នេះគ្មានអ្វីត្រូវបានដំឡើងឡើយ។</value></data>
+  <data name="install_done" xml:space="preserve"><value>បានដំឡើងដោយជោគជ័យ។</value></data>
+  <data name="openvpn_found" xml:space="preserve"><value>OpenVPN៖ {0}</value></data>
+  <data name="openvpn_not_found" xml:space="preserve"><value>OpenVPN៖ មិនទាន់ដំឡើង</value></data>
+  <data name="settings_title" xml:space="preserve"><value>ការកំណត់</value></data>
+  <data name="appearance" xml:space="preserve"><value>រូបរាង</value></data>
+  <data name="theme" xml:space="preserve"><value>រចនាប័ទ្ម</value></data>
+  <data name="theme_system" xml:space="preserve"><value>តាមប្រព័ន្ធ</value></data>
+  <data name="theme_light" xml:space="preserve"><value>ភ្លឺ</value></data>
+  <data name="theme_dark" xml:space="preserve"><value>ងងឹត</value></data>
+  <data name="language" xml:space="preserve"><value>ភាសា</value></data>
+  <data name="lang_vi" xml:space="preserve"><value>Tiếng Việt</value></data>
+  <data name="lang_en" xml:space="preserve"><value>English</value></data>
+  <data name="lang_zh_cn" xml:space="preserve"><value>简体中文</value></data>
+  <data name="lang_km" xml:space="preserve"><value>ភាសាខ្មែរ</value></data>
+  <data name="connection_section" xml:space="preserve"><value>ការតភ្ជាប់</value></data>
+  <data name="allow_local_lan" xml:space="preserve"><value>អនុញ្ញាតបណ្ដាញមូលដ្ឋាន (LAN)</value></data>
+  <data name="allow_local_lan_summary" xml:space="preserve"><value>នៅពេលបើក ឧបករណ៍នៅលើបណ្ដាញមូលដ្ឋានរបស់អ្នក (ម៉ាស៊ីនបោះពុម្ព NAS ។ល។) នៅតែអាចចូលប្រើបាន ខណៈពេលភ្ជាប់ VPN។ មានប្រសិទ្ធភាពនៅពេលភ្ជាប់លើកក្រោយ។</value></data>
+  <data name="block_dns" xml:space="preserve"><value>រារាំង DNS នៅក្រៅ tunnel</value></data>
+  <data name="block_dns_summary" xml:space="preserve"><value>ការពារការលេចធ្លាយ DNS ពេលកំពុងភ្ជាប់។ សូមបិទមុខងារនេះ ប្រសិនបើគេហទំព័រលែងដំណើរការលើម៉ាស៊ីនមេខ្លះ។</value></data>
+  <data name="about" xml:space="preserve"><value>អំពី</value></data>
+  <data name="about_version" xml:space="preserve"><value>កំណែ {0}</value></data>
+  <data name="vpn_engine" xml:space="preserve"><value>ម៉ាស៊ីនដំណើរការ VPN</value></data>
+  <data name="vpn_engine_body" xml:space="preserve"><value>ប្រើកម្មវិធី OpenVPN Community 2.6 ផ្លូវការ តាមរយៈ OpenVPN Interactive Service ដូច្នេះកម្មវិធីដំណើរការដោយមិនត្រូវការសិទ្ធិអ្នកគ្រប់គ្រង។ Profile របស់ VPNGate ត្រូវបានត្រងមុនពេលប្រើ៖ directive ប្រភេទ script, plugin, management និងឯកសារ ត្រូវបានដកចេញ ហើយ OpenVPN ដំណើរការជាមួយ --script-security 1 លើ adapter TAP-Windows6។</value></data>
+  <data name="privacy_note" xml:space="preserve"><value>កំណត់សម្គាល់អំពីឯកជនភាព</value></data>
+  <data name="privacy_note_body" xml:space="preserve"><value>ម៉ាស៊ីនមេ VPNGate គឺជា VPN សាធារណៈ។ កុំប្រើសម្រាប់ទិន្នន័យរសើប។ ប្រតិបត្តិករ VPN សាធារណៈអាចកត់ត្រាចរាចរណ៍របស់អ្នក។</value></data>
+  <data name="credits_heading" xml:space="preserve"><value>ការទទួលស្គាល់</value></data>
+  <data name="credit_designer" xml:space="preserve"><value>រចនាដោយ TaiNT13@PNC STG</value></data>
+  <data name="credit_vpngate" xml:space="preserve"><value>VPN Gate៖ បញ្ជី VPN សាធារណៈ (vpngate.net)</value></data>
+  <data name="credit_openvpn" xml:space="preserve"><value>ប្រើ OpenVPN® Community 2.6 (GPLv2) ដែលដំឡើងពី openvpn.net។ កូដប្រភព៖ github.com/OpenVPN/openvpn/tree/v2.6.23</value></data>
+  <data name="open_licenses" xml:space="preserve"><value>បើកថតអាជ្ញាប័ណ្ណ</value></data>
+  <data name="credit_flags" xml:space="preserve"><value>ទង់ជាតិ៖ flag-icons ដោយ Panayiotis Lipiridis (MIT)</value></data>
+  <data name="feedback_hint" xml:space="preserve"><value>ចុចដើម្បីផ្ញើមតិកែលម្អតាមអ៊ីមែល</value></data>
+  <data name="feedback_mail_subject" xml:space="preserve"><value>មតិកែលម្អ STG Phantom VPN</value></data>
+  <data name="open_logs" xml:space="preserve"><value>បើកថតកំណត់ហេតុ (log)</value></data>
+  <data name="tap_dialog_title" xml:space="preserve"><value>ត្រូវការ driver TAP-Windows6</value></data>
+  <data name="tap_body_missing" xml:space="preserve"><value>OpenVPN ត្រូវបានដំឡើងរួចហើយ ប៉ុន្តែខ្វះ driver បណ្ដាញ TAP-Windows6 ដែលម៉ាស៊ីនមេ VPNGate ត្រូវការ។ STG Phantom VPN អាចបន្ថែមវាពីកម្មវិធីដំឡើង OpenVPN {0} ផ្លូវការ ដែលត្រូវបានពិនិត្យដោយ SHA-256 និងហត្ថលេខារបស់ OpenVPN Inc. មុនពេលដំណើរការ។ Windows នឹងសុំសិទ្ធិអ្នកគ្រប់គ្រងម្ដង។</value></data>
+  <data name="tap_body_create" xml:space="preserve"><value>driver TAP-Windows6 ត្រូវបានដំឡើងហើយ ប៉ុន្តែមិនទាន់មាន network adapter TAP-Windows6 ទេ។ STG Phantom VPN អាចបង្កើតមួយដោយប្រើឧបករណ៍ tapctl ដែលមានហត្ថលេខារបស់ OpenVPN។ Windows នឹងសុំសិទ្ធិអ្នកគ្រប់គ្រងម្ដង។</value></data>
+  <data name="tap_body_inactive" xml:space="preserve"><value>មាន network adapter TAP-Windows6 ប៉ុន្តែវាត្រូវបានបិទ ឬមិនអាចប្រើបាន។ សូមបើកវានៅក្នុង Control Panel &gt; Network Connections ឬឱ្យ STG Phantom VPN បង្កើត adapter ថ្មី។ Windows នឹងសុំសិទ្ធិអ្នកគ្រប់គ្រងម្ដង។</value></data>
+  <data name="tap_install_action" xml:space="preserve"><value>ដំឡើង driver</value></data>
+  <data name="tap_create_action" xml:space="preserve"><value>បង្កើត adapter</value></data>
+  <data name="tap_later_action" xml:space="preserve"><value>ពេលក្រោយ</value></data>
+  <data name="tap_confirm_question" xml:space="preserve"><value>អនុញ្ញាតឱ្យ STG Phantom VPN ដំឡើងវាឥឡូវនេះទេ?</value></data>
+  <data name="tap_later_note" xml:space="preserve"><value>ប្រសិនបើអ្នកជ្រើស «ពេលក្រោយ» គ្មានអ្វីត្រូវបានដំឡើងទេ ហើយកម្មវិធីនឹងសួរម្ដងទៀតតែនៅពេលអ្នកភ្ជាប់ទៅម៉ាស៊ីនមេ VPNGate ប៉ុណ្ណោះ។</value></data>
+  <data name="close_action" xml:space="preserve"><value>បិទ</value></data>
+  <data name="tap_ready_title" xml:space="preserve"><value>TAP-Windows6 រួចរាល់ហើយ</value></data>
+  <data name="tap_ready_body" xml:space="preserve"><value>driver និង network adapter ត្រូវបានដំឡើងហើយ។ ឥឡូវនេះអ្នកអាចតភ្ជាប់បាន។</value></data>
+  <data name="tap_still_missing" xml:space="preserve"><value>TAP-Windows6 នៅតែមិនអាចប្រើបាន។ សូមចាប់ផ្ដើម Windows ឡើងវិញ ហើយព្យាយាមម្ដងទៀត។ បើនៅតែមានបញ្ហា សូមបើក Settings &gt; Apps &gt; OpenVPN &gt; Modify បើក TAP-Windows6 ហើយពិនិត្យកំណត់ហេតុ។</value></data>
+  <data name="install_openvpn_newer" xml:space="preserve"><value>កំណែ OpenVPN ថ្មីជាងត្រូវបានដំឡើងរួចហើយ ដូច្នេះកម្មវិធីដំឡើងដែលភ្ជាប់មកមិនអាចកែប្រែវាបានទេ។ សូមបើក Settings &gt; Apps &gt; OpenVPN &gt; Modify បើក TAP-Windows6 រួចព្យាយាមម្ដងទៀត។</value></data>
+  <data name="tap_repairing" xml:space="preserve"><value>កំពុងរៀបចំ TAP-Windows6…</value></data>
+  <data name="tap_status_ready" xml:space="preserve"><value>TAP-Windows6៖ រួចរាល់</value></data>
+  <data name="tap_status_inactive" xml:space="preserve"><value>TAP-Windows6៖ adapter ត្រូវបានបិទ ឬមិនអាចប្រើបាន</value></data>
+  <data name="tap_status_no_adapter" xml:space="preserve"><value>TAP-Windows6៖ មាន driver ប៉ុន្តែគ្មាន adapter</value></data>
+  <data name="tap_status_missing" xml:space="preserve"><value>TAP-Windows6៖ មិនទាន់ដំឡើង</value></data>
+  <data name="system_section" xml:space="preserve"><value>ប្រព័ន្ធ</value></data>
+  <data name="about_os" xml:space="preserve"><value>បានរកឃើញ៖ {0}</value></data>
+  <data name="prereq_title" xml:space="preserve"><value>ត្រូវការបច្ចុប្បន្នភាព Windows</value></data>
+  <data name="prereq_warn_title" xml:space="preserve"><value>ខ្វះវិញ្ញាបនបត្រឫស</value></data>
+  <data name="prereq_body" xml:space="preserve"><value>មិនអាចដំឡើង ឬប្រើ OpenVPN លើកុំព្យូទ័រនេះបានទេ រហូតដល់បានដំឡើងបច្ចុប្បន្នភាព Microsoft ខាងក្រោម។ សូមដំឡើង ចាប់ផ្ដើម Windows ឡើងវិញ រួចចុច ពិនិត្យម្ដងទៀត។</value></data>
+  <data name="prereq_kb2999226" xml:space="preserve"><value>Universal C Runtime ដែល OpenVPN និង OpenSSL ត្រូវការ។</value></data>
+  <data name="prereq_kb4474419" xml:space="preserve"><value>ការគាំទ្រហត្ថលេខាកូដ SHA-2 ដែលត្រូវការសម្រាប់ផ្ទុកកម្មវិធីបញ្ជាបណ្ដាញ TAP-Windows6។</value></data>
+  <data name="prereq_kb4019990" xml:space="preserve"><value>D3DCompiler_47 ដែល .NET Framework 4.8 លើ Windows 7 ត្រូវការ។</value></data>
+  <data name="prereq_open_catalog" xml:space="preserve"><value>បើក Microsoft Update Catalog</value></data>
+  <data name="prereq_roots_missing" xml:space="preserve"><value>ឃ្លាំងវិញ្ញាបនបត្រ Windows មិនទាន់មានវិញ្ញាបនបត្រឫសទាំងនេះទេ៖ {0}។ ជាធម្មតា Windows ទាញយកវាដោយស្វ័យប្រវត្តិនៅពេលត្រូវការលើកដំបូង។ ប្រសិនបើការទាញយក ឬការតភ្ជាប់បរាជ័យដោយកំហុសវិញ្ញាបនបត្រ សូមដំឡើងបច្ចុប្បន្នភាពវិញ្ញាបនបត្រឫសចុងក្រោយពី Windows Update ហើយសាកល្បងម្ដងទៀត។</value></data>
+  <data name="prereq_roots_policy" xml:space="preserve"><value>គោលការណ៍លើកុំព្យូទ័រនេះបានបិទការធ្វើបច្ចុប្បន្នភាពវិញ្ញាបនបត្រឫសដោយស្វ័យប្រវត្តិ ដូច្នេះត្រូវដំឡើងវិញ្ញាបនបត្រទាំងនេះដោយដៃ។</value></data>
+  <data name="prereq_recheck" xml:space="preserve"><value>ពិនិត្យម្ដងទៀត</value></data>
+  <data name="prereq_checking" xml:space="preserve"><value>កំពុងពិនិត្យ…</value></data>
+  <data name="prereq_still_missing" xml:space="preserve"><value>នៅខ្វះ៖ {0}។ បច្ចុប្បន្នភាពខ្លះមានប្រសិទ្ធភាពតែក្រោយចាប់ផ្ដើម Windows ឡើងវិញប៉ុណ្ណោះ។</value></data>
+  <data name="prereq_all_ok" xml:space="preserve"><value>បច្ចុប្បន្នភាព Windows ដែលត្រូវការត្រូវបានដំឡើងគ្រប់ហើយ។</value></data>
+  <data name="prereq_blocked_notice" xml:space="preserve"><value>សូមដំឡើងបច្ចុប្បន្នភាព Windows ដែលត្រូវការ មុនពេលប្រើ OpenVPN។</value></data>
+  <data name="prereq_show" xml:space="preserve"><value>មើលបច្ចុប្បន្នភាពដែលត្រូវការ</value></data>
+  <data name="tray_open" xml:space="preserve"><value>បើក STG Phantom VPN</value></data>
+  <data name="tray_connect" xml:space="preserve"><value>ភ្ជាប់</value></data>
+  <data name="tray_disconnect" xml:space="preserve"><value>ផ្ដាច់</value></data>
+  <data name="tray_exit" xml:space="preserve"><value>ចាកចេញ</value></data>
+  <data name="tray_hint_title" xml:space="preserve"><value>STG Phantom VPN នៅតែដំណើរការ</value></data>
+  <data name="tray_hint_body" xml:space="preserve"><value>កម្មវិធីនៅតែដំណើរការនៅក្នុងតំបន់ជូនដំណឹង ហើយ VPN នៅតែភ្ជាប់។ ចុចរូបតំណាងដើម្បីបើកវិញ ឬចុចកណ្ដុរស្ដាំ ហើយជ្រើស «ចាកចេញ» ដើម្បីបិទទាំងស្រុង។</value></data>
+  <data name="exit_confirm_body" xml:space="preserve"><value>VPN នៅតែភ្ជាប់។ ផ្ដាច់ ហើយចាកចេញពី STG Phantom VPN ឬ?</value></data>
+  <data name="minimize_to_tray" xml:space="preserve"><value>បង្រួមទៅថាសប្រព័ន្ធនៅពេលបិទ</value></data>
+  <data name="minimize_to_tray_summary" xml:space="preserve"><value>នៅពេលបិទបង្អួច កម្មវិធី និង VPN នៅតែដំណើរការក្នុងតំបន់ជូនដំណឹង។ បិទជម្រើសនេះ ដើម្បីចាកចេញនៅពេលបិទបង្អួច។</value></data>
+  <data name="dns_label" xml:space="preserve"><value>DNS ពេលកំពុងភ្ជាប់</value></data>
+  <data name="dns_summary" xml:space="preserve"><value>ជ្រើសរើសអ្នកបកប្រែឈ្មោះដែន (DNS) ពេល VPN បើក។ DNS សាធារណៈអាចលឿនជាង ឬរារាំងការផ្សាយពាណិជ្ជកម្ម និងមេរោគ។</value></data>
+  <data name="dns_server_default" xml:space="preserve"><value>DNS របស់ម៉ាស៊ីនមេ VPN (លំនាំដើម)</value></data>
+  <data name="dns_server_default_detail" xml:space="preserve"><value>ប្រើ DNS ដែលម៉ាស៊ីនមេ VPNGate ផ្ដល់ឱ្យ</value></data>
+  <data name="dns_custom" xml:space="preserve"><value>កំណត់ផ្ទាល់ខ្លួន</value></data>
+  <data name="dns_custom_detail" xml:space="preserve"><value>បញ្ចូលអាសយដ្ឋាន IPv4 ផ្ទាល់ខ្លួន</value></data>
+  <data name="dns_primary" xml:space="preserve"><value>DNS ចម្បង</value></data>
+  <data name="dns_secondary" xml:space="preserve"><value>DNS បន្ទាប់បន្សំ (ស្រេចចិត្ត)</value></data>
+  <data name="dns_invalid" xml:space="preserve"><value>អាសយដ្ឋានមិនត្រឹមត្រូវ។ សូមបញ្ចូល IPv4 សាធារណៈ ឧ. 1.1.1.1 (មិនអាចប្រើអាសយដ្ឋានបណ្ដាញក្នុងបានទេ)។</value></data>
+  <data name="dns_custom_required" xml:space="preserve"><value>សូមបញ្ចូល DNS ចម្បង។ មុននោះ កម្មវិធីប្រើ DNS របស់ម៉ាស៊ីនមេ VPN។</value></data>
+  <data name="dns_block_note" xml:space="preserve"><value>ពេលប្រើ DNS ផ្ទាល់ខ្លួន DNS នៅក្រៅ tunnel តែងតែត្រូវបានរារាំង ដើម្បីការពារការលេចធ្លាយ។</value></data>
+  <data name="settings_apply_next" xml:space="preserve"><value>កំពុងភ្ជាប់៖ ការកំណត់ថ្មីនឹងអនុវត្តនៅពេលភ្ជាប់លើកក្រោយ។</value></data>
+  <data name="reconnect_now" xml:space="preserve"><value>ភ្ជាប់ឡើងវិញឥឡូវ</value></data>
+  <data name="credit_dns" xml:space="preserve"><value>រូបសញ្ញាអ្នកផ្ដល់ DNS៖ Cloudflare, Google, Quad9, OpenDNS (Cisco) និង AdGuard គឺជាពាណិជ្ជសញ្ញារបស់ម្ចាស់រៀងៗខ្លួន។</value></data>
+  <data name="error_server_refused" xml:space="preserve"><value>ម៉ាស៊ីនមេ {0} បានបដិសេធការតភ្ជាប់ (AUTH_FAILED)។ នេះជាបញ្ហានៅខាងម៉ាស៊ីនមេ VPNGate (ផ្ទុកលើស ឬអស់អាសយដ្ឋាន) មិនមែនមកពីពាក្យសម្ងាត់ ឬការកំណត់របស់អ្នកទេ។ សូមជ្រើសម៉ាស៊ីនមេផ្សេង។</value></data>
+  <data name="auto_next_server_note" xml:space="preserve"><value>{0} បានបដិសេធការតភ្ជាប់ កំពុងសាក {1}…</value></data>
+  <data name="connect_timeout_message_network" xml:space="preserve"><value>មិនមានការឆ្លើយតបពីម៉ាស៊ីនមេ {0} ក្នុងរយៈពេល {1} វិនាទី។ ម៉ាស៊ីនមេអាចបិទ ផ្ទុកលើស ឬច្រករបស់វាត្រូវបានរារាំងនៅលើបណ្ដាញរបស់អ្នក។ សូមសាកម៉ាស៊ីនមេផ្សេង។</value></data>
+  <data name="connect_timeout_message_handshake" xml:space="preserve"><value>ម៉ាស៊ីនមេ {0} បានឆ្លើយតប ប៉ុន្តែមិនបានបញ្ចប់ការរៀបចំសម័យក្នុងរយៈពេល {1} វិនាទី។ វាអាចផ្ទុកលើស។ សូមសាកម៉ាស៊ីនមេផ្សេង។</value></data>
+  <data name="connect_timeout_message_adapter" xml:space="preserve"><value>បានតភ្ជាប់ទៅម៉ាស៊ីនមេ {0} ប៉ុន្តែកាតបណ្ដាញ TAP មិនទាន់ទទួលបានអាសយដ្ឋាន IP ក្នុងរយៈពេល {1} វិនាទី។ សូមសាកម៉ាស៊ីនមេផ្សេង ប្រសិនបើកើតឡើងជាមួយគ្រប់ម៉ាស៊ីនមេ សូមបើកកំណត់ហេតុ ហើយពិនិត្យដ្រាយវ័រ TAP-Windows6។</value></data>
+  <data name="show_logs" xml:space="preserve"><value>មើលកំណត់ហេតុ</value></data>
+  <data name="log_viewer_title" xml:space="preserve"><value>កំណត់ហេតុការតភ្ជាប់</value></data>
+  <data name="log_viewer_file" xml:space="preserve"><value>ឯកសារកំណត់ហេតុ</value></data>
+  <data name="log_kind_app" xml:space="preserve"><value>កម្មវិធី</value></data>
+  <data name="log_refresh" xml:space="preserve"><value>ផ្ទុកឡើងវិញ</value></data>
+  <data name="log_copy" xml:space="preserve"><value>ចម្លង</value></data>
+  <data name="log_copied" xml:space="preserve"><value>បានចម្លងកំណត់ហេតុទៅក្ដារតម្បៀតខ្ទាស់។</value></data>
+  <data name="log_copy_failed" xml:space="preserve"><value>មិនអាចចម្លងបាន៖ {0}</value></data>
+  <data name="log_open_folder" xml:space="preserve"><value>បើកថតកំណត់ហេតុ</value></data>
+  <data name="log_empty" xml:space="preserve"><value>មិនទាន់មានកំណត់ហេតុទេ។</value></data>
+  <data name="log_truncated" xml:space="preserve"><value>ឯកសារធំ បង្ហាញតែ {0} ចុងក្រោយប៉ុណ្ណោះ។ បើកថតកំណត់ហេតុដើម្បីមើលទាំងអស់។</value></data>
+  <data name="log_read_failed" xml:space="preserve"><value>មិនអាចអានឯកសារកំណត់ហេតុបាន៖ {0}</value></data>
+  <data name="block_ipv6" xml:space="preserve"><value>រារាំងការលេចធ្លាយ IPv6</value></data>
+  <data name="block_ipv6_summary" xml:space="preserve"><value>VPNGate គាំទ្រតែ IPv4 ប៉ុណ្ណោះ។ ពេលបើក ការតភ្ជាប់ IPv6 ទាំងអស់ត្រូវបានរារាំងខណៈ VPN កំពុងតភ្ជាប់ ដើម្បីកុំឱ្យ IP ពិតលេចធ្លាយតាម IPv6 ហើយត្រូវដកចេញពេលផ្ដាច់ ឬចាកចេញពីកម្មវិធី។</value></data>
+  <data name="ip_real" xml:space="preserve"><value>IP ពិត</value></data>
+  <data name="ip_vpn" xml:space="preserve"><value>IP VPN</value></data>
+  <data name="ip_check" xml:space="preserve"><value>ពិនិត្យ IP</value></data>
+  <data name="ip_copy" xml:space="preserve"><value>ចម្លង IP</value></data>
+  <data name="ip_checking_short" xml:space="preserve"><value>កំពុងពិនិត្យ…</value></data>
+  <data name="ip_status_checking" xml:space="preserve"><value>កំពុងពិនិត្យ IP សាធារណៈ…</value></data>
+  <data name="ip_check_failed" xml:space="preserve"><value>មិនអាចពិនិត្យ IP បានទេ (គ្មានអ៊ីនធឺណិត ឬសេវាពិនិត្យមិនឆ្លើយតប)។</value></data>
+  <data name="ip_status_not_tunneled" xml:space="preserve"><value>IP VPN ដូច IP ពិត៖ ចរាចរណ៍មិនឆ្លងកាត់ VPN ទេ។</value></data>
+  <data name="ip_status_v6_leak" xml:space="preserve"><value>ការលេចធ្លាយ IPv6៖ {0} នៅតែអាចចូលប្រើបាននៅក្រៅ VPN។ សូមផ្ដាច់ ហើយតភ្ជាប់ម្ដងទៀត។</value></data>
+  <data name="ip_status_v6_leak_off" xml:space="preserve"><value>ការលេចធ្លាយ IPv6៖ {0} រំលង VPN។ សូមបើក "រារាំងការលេចធ្លាយ IPv6" ក្នុងការកំណត់។</value></data>
+  <data name="ip_status_ok_server" xml:space="preserve"><value>ចរាចរណ៍ឆ្លងកាត់ VPN (ត្រូវនឹង IP ម៉ាស៊ីនមេ) គ្មានការលេចធ្លាយ IPv6។</value></data>
+  <data name="ip_status_ok" xml:space="preserve"><value>ចរាចរណ៍ឆ្លងកាត់ VPN (ខុសពី IP ពិត) គ្មានការលេចធ្លាយ IPv6។</value></data>
+  <data name="log_clear" xml:space="preserve"><value>លុបកំណត់ហេតុ</value></data>
+  <data name="log_clear_title" xml:space="preserve"><value>លុបកំណត់ហេតុ</value></data>
+  <data name="log_clear_confirm" xml:space="preserve"><value>លុបកំណត់ហេតុទាំងអស់របស់កម្មវិធី និង OpenVPN? មិនអាចត្រឡប់វិញបានទេ។</value></data>
+  <data name="log_clear_active_note" xml:space="preserve"><value>កំណត់ហេតុនៃការតភ្ជាប់ដែលកំពុងដំណើរការនឹងត្រូវធ្វើឱ្យទទេជំនួសឱ្យការលុប។</value></data>
+  <data name="log_cleared" xml:space="preserve"><value>បានលុបឯកសារកំណត់ហេតុ {0}។</value></data>
+  <data name="log_clear_failed" xml:space="preserve"><value>ឯកសារ {0} មិនអាចលុបបានទេ។</value></data>
+  <data name="caption_minimize" xml:space="preserve"><value>បង្រួម</value></data>
+  <data name="caption_maximize" xml:space="preserve"><value>ពង្រីក</value></data>
+  <data name="caption_restore" xml:space="preserve"><value>ស្ដារ</value></data>
+  <data name="caption_close" xml:space="preserve"><value>បិទ</value></data>
+  <data name="ip_section" xml:space="preserve"><value>អាសយដ្ឋាន IP សាធារណៈ</value></data>
+  <data name="logs_section" xml:space="preserve"><value>កំណត់ហេតុ</value></data>
+  <data name="logs_section_summary" xml:space="preserve"><value>កំណត់ហេតុកម្មវិធី និង OpenVPN រក្សាទុកតែលើកុំព្យូទ័រនេះ ហើយជួយរកមូលហេតុដែលការតភ្ជាប់បរាជ័យ។</value></data>
+</root>

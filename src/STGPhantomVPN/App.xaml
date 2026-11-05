@@ -1,0 +1,25 @@
+<Application x:Class="STGPhantomVPN.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:STGPhantomVPN.Converters"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             ShutdownMode="OnMainWindowClose">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Fluent (WinUI 3 style) theme: colour tokens first (ThemeService swaps light/dark), then the control styles. -->
+                <ResourceDictionary Source="/STGPhantomVPN;component/Themes/Colors.Light.xaml" />
+                <ResourceDictionary Source="/STGPhantomVPN;component/Themes/Fluent.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <conv:BoolToVisibility x:Key="BoolToVis" />
+            <conv:NonEmptyToVisibility x:Key="NonEmptyToVis" />
+            <conv:InverseBool x:Key="InverseBool" />
+            <!-- Upper bound for dialog content; MainWindow updates it from its client height. -->
+            <sys:Double x:Key="DialogMaxHeight">560</sys:Double>
+            <conv:EqualsParameter x:Key="EqualsParam" />
+            <conv:SameServer x:Key="SameServer" />
+            <conv:ServerRows x:Key="ServerRows" />
+            <conv:TabIs x:Key="TabIs" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

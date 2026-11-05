@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>STGPhantomVPN</AssemblyName>
+    <RootNamespace>STGPhantomVPN</RootNamespace>
+    <Version>1.0.11</Version>
+    <FileVersion>1.0.11.0</FileVersion>
+    <InformationalVersion>1.0.11</InformationalVersion>
+    <Product>STG Phantom VPN</Product>
+    <Company>PNC STG</Company>
+    <Authors>TaiNT13@PNC STG</Authors>
+    <Description>STG Phantom VPN for Windows: VPNGate OpenVPN client.</Description>
+    <Copyright>Designed by TaiNT13@PNC STG</Copyright>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <Nullable>disable</Nullable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <SatelliteResourceLanguages>vi;zh-CN;km</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net48" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\app.ico" />
+    <Resource Include="Assets\tray-idle.ico" />
+    <Resource Include="Assets\tray-connected.ico" />
+    <Resource Include="Assets\brand-mark.png" />
+    <Resource Include="Assets\app-icon.png" />
+    <Resource Include="Assets\Dns\*.png" />
+    <Resource Include="Assets\Flags\*.png" />
+    <None Update="Assets\vpngate_fallback.csv" CopyToOutputDirectory="PreserveNewest" />
+    <EmbeddedResource Update="Resources\Strings.resx" LogicalName="STGPhantomVPN.Resources.Strings.resources" />
+    <EmbeddedResource Update="Resources\Strings.vi.resx" LogicalName="STGPhantomVPN.Resources.Strings.vi.resources" />
+    <!-- zh-CN and km are machine-assisted drafts; they need review by native speakers before release. -->
+    <EmbeddedResource Update="Resources\Strings.zh-CN.resx" LogicalName="STGPhantomVPN.Resources.Strings.zh-CN.resources" />
+    <EmbeddedResource Update="Resources\Strings.km.resx" LogicalName="STGPhantomVPN.Resources.Strings.km.resources" />
+  </ItemGroup>
+</Project>
