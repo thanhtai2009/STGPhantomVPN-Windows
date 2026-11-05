@@ -2,6 +2,8 @@
 
 # STG Phantom VPN for Windows - 1.0.11
 
+<p align="center"><img src="assets/screenshots/home.png" alt="STG Phantom VPN - Màn hình Trang chủ" width="720"></p>
+
 Ứng dụng VPN miễn phí cho Windows, giúp kết nối nhanh tới các máy chủ công cộng của VPN Gate chỉ với vài cú nhấp chuột. Giao diện đơn giản, trực quan, là lựa chọn thay thế gọn nhẹ cho SoftEther VPN Client chính thức.
 
 ## Điểm nổi bật
