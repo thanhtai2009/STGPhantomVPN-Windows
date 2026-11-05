@@ -2,7 +2,7 @@
 
 # STG Phantom VPN for Windows - 1.0.11
 
-<p align="center"><img src="assets/screenshots/home.png" alt="STG Phantom VPN - Home screen" width="720"></p>
+<p align="center"><img src="assets/screenshots/home-en.png" alt="STG Phantom VPN - Home screen" width="720"></p>
 
 A free VPN app for Windows that connects you to VPN Gate's public servers in just a few clicks. Its simple, clear interface makes it a lightweight alternative to the official SoftEther VPN Client.
 
