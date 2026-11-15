@@ -20,6 +20,28 @@ namespace STGPhantomVPN.Core
         public override string ToString() => LayerName + " " + (Permit ? "PERMIT " + Prefix : "BLOCK all") + " w" + Weight;
     }
 
+    /// <summary>A typed WFP filter condition used by the system-wide kill switch.</summary>
+    public sealed class WfpConditionSpec
+    {
+        public Guid Field;
+        public uint ValueType;
+        public byte[] Bytes;
+        public ushort UInt16;
+        public byte UInt8;
+        public ulong UInt64;
+    }
+
+    /// <summary>A WFP outbound filter. Permit filters have higher weight than the final block-all filter.</summary>
+    public sealed class KillSwitchFilterSpec
+    {
+        public Guid Layer;
+        public string LayerName;
+        public bool Permit;
+        public byte Weight;
+        public readonly List<WfpConditionSpec> Conditions = new List<WfpConditionSpec>();
+        public override string ToString() => LayerName + " " + (Permit ? "PERMIT" : "BLOCK all");
+    }
+
     /// <summary>
     /// IPv6 leak block through the Windows Filtering Platform, used for bridged (TAP) sessions.
     ///
@@ -42,8 +64,12 @@ namespace STGPhantomVPN.Core
         public static readonly Guid LayerAleAuthConnectV6 = new Guid("4a72393b-319f-44bc-84c3-ba54dcb3b6b4");
         public static readonly Guid LayerAleAuthRecvAcceptV6 = new Guid("a3b42c97-9f04-4672-b87e-cee9c483257f");
         public static readonly Guid LayerOutboundTransportV6 = new Guid("e1735bde-013f-4655-b351-a49e15762df0");
+        public static readonly Guid LayerOutboundTransportV4 = new Guid("09e61aea-d214-46e2-9b21-b26b0b2f28c8");
         public static readonly Guid LayerInboundTransportV6 = new Guid("634a869f-fc23-4b90-b0c1-bf620a36ae6f");
         public static readonly Guid ConditionIpRemoteAddress = new Guid("b235ae9a-1d64-49b8-a44c-5ff3d9095045");
+        public static readonly Guid ConditionIpLocalInterface = new Guid("4cd62a49-59c3-4969-b7f3-bda5d32890a4");
+        public static readonly Guid ConditionIpRemotePort = new Guid("c35a604d-d22b-4e1a-91b4-68f674ee674b");
+        public static readonly Guid ConditionIpProtocol = new Guid("3971ef2b-623e-4f9a-8cb1-6e79b806b9a7");
 
         /// <summary>The app's own sublayer, created inside the dynamic session (so it disappears with it).</summary>
         public static readonly Guid SubLayerKey = new Guid("6f1b7d43-5c2e-4f0a-9d8e-53544750564e");
@@ -86,6 +112,91 @@ namespace STGPhantomVPN.Core
             }
             return list;
         }
+
+        /// <summary>
+        /// Outbound system-wide kill switch. Only loopback, optional private LAN ranges, the VPN endpoint,
+        /// and traffic leaving through the established VPN interface are permitted. The endpoint exception
+        /// is limited to its exact address, port and transport protocol.
+        /// </summary>
+        public static List<KillSwitchFilterSpec> KillSwitchPlan(bool allowLocalLan, IPAddress endpoint, ushort port, byte protocol, ulong tunnelLuid)
+        {
+            if (endpoint == null || endpoint.AddressFamily != AddressFamily.InterNetwork || port == 0 || (protocol != 6 && protocol != 17))
+                throw new ArgumentException("Kill switch requires a valid IPv4 VPN endpoint, port and TCP/UDP protocol");
+            var list = new List<KillSwitchFilterSpec>();
+            AddLayer(list, LayerOutboundTransportV4, "OUTBOUND_TRANSPORT_V4", false, allowLocalLan, endpoint, port, protocol, tunnelLuid);
+            AddLayer(list, LayerOutboundTransportV6, "OUTBOUND_TRANSPORT_V6", true, allowLocalLan, endpoint, port, protocol, tunnelLuid);
+            return list;
+        }
+
+        static void AddLayer(List<KillSwitchFilterSpec> list, Guid layer, string name, bool v6,
+            bool allowLocalLan, IPAddress endpoint, ushort port, byte protocol, ulong tunnelLuid)
+        {
+            void PermitPrefix(string prefix)
+            {
+                var (address, length) = ParsePrefix(prefix);
+                var raw = new byte[17];
+                Buffer.BlockCopy(address, 0, raw, 0, 16);
+                raw[16] = length;
+                var f = NewFilter(layer, name, true, 15);
+                f.Conditions.Add(new WfpConditionSpec { Field = ConditionIpRemoteAddress, ValueType = 0x101, Bytes = raw });
+                list.Add(f);
+            }
+            void PermitV4(string address, byte length)
+            {
+                var f = NewFilter(layer, name, true, 15);
+                f.Conditions.Add(new WfpConditionSpec { Field = ConditionIpRemoteAddress, ValueType = 0x100, Bytes = V4Mask(IPAddress.Parse(address), length) });
+                list.Add(f);
+            }
+
+            if (v6)
+            {
+                foreach (var p in new[] { PrefixLoopback, PrefixLinkLocal, PrefixMulticast, PrefixMapped }) PermitPrefix(p);
+                if (allowLocalLan) PermitPrefix(PrefixUniqueLocal);
+            }
+            else
+            {
+                PermitV4("127.0.0.0", 8);
+                PermitV4("169.254.0.0", 16);
+                if (allowLocalLan)
+                {
+                    PermitV4("10.0.0.0", 8);
+                    PermitV4("172.16.0.0", 12);
+                    PermitV4("192.168.0.0", 16);
+                }
+                // TAP bridged sessions need the virtual DHCP lease before OpenVPN reports CONNECTED.
+                var dhcp = NewFilter(layer, name, true, 15);
+                dhcp.Conditions.Add(new WfpConditionSpec { Field = ConditionIpRemotePort, ValueType = 2, UInt16 = 67 });
+                dhcp.Conditions.Add(new WfpConditionSpec { Field = ConditionIpProtocol, ValueType = 1, UInt8 = 17 });
+                list.Add(dhcp);
+                var endpointFilter = NewFilter(layer, name, true, 15);
+                endpointFilter.Conditions.Add(new WfpConditionSpec { Field = ConditionIpRemoteAddress, ValueType = 0x100, Bytes = V4Mask(endpoint, 32) });
+                endpointFilter.Conditions.Add(new WfpConditionSpec { Field = ConditionIpRemotePort, ValueType = 2, UInt16 = port });
+                endpointFilter.Conditions.Add(new WfpConditionSpec { Field = ConditionIpProtocol, ValueType = 1, UInt8 = protocol });
+                list.Add(endpointFilter);
+            }
+
+            if (tunnelLuid != 0)
+            {
+                var tunnel = NewFilter(layer, name, true, 15);
+                tunnel.Conditions.Add(new WfpConditionSpec { Field = ConditionIpLocalInterface, ValueType = 4, UInt64 = tunnelLuid });
+                list.Add(tunnel);
+            }
+            list.Add(NewFilter(layer, name, false, 0));
+        }
+
+        static byte[] V4Mask(IPAddress ip, int length)
+        {
+            // FWP_V4_ADDR_AND_MASK fields are host-order UINT32 values. On Windows (little-endian),
+            // their in-memory bytes are therefore the reverse of IPAddress.GetAddressBytes().
+            var raw = new byte[8];
+            var address = ip.GetAddressBytes();
+            for (var i = 0; i < 4; i++) raw[i] = address[3 - i];
+            for (var bit = 0; bit < length; bit++) raw[4 + (3 - bit / 8)] |= (byte)(0x80 >> (bit % 8));
+            return raw;
+        }
+
+        static KillSwitchFilterSpec NewFilter(Guid layer, string name, bool permit, byte weight) =>
+            new KillSwitchFilterSpec { Layer = layer, LayerName = name, Permit = permit, Weight = weight };
 
         /// <summary>Address bytes and prefix length of "addr/len" (IPv6 only); throws on anything else.</summary>
         public static (byte[] Address, byte Length) ParsePrefix(string prefix)

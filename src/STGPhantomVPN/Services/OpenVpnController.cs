@@ -140,6 +140,19 @@ namespace STGPhantomVPN.Services
             if (sanitized.RemovedDirectives.Count > 0)
                 Log.Warn("Removed from " + server.DisplayName + " profile: " + string.Join(", ", sanitized.RemovedDirectives));
 
+            if (options.KillSwitch && Ipv6Guard.Instance.KillSwitchRequested)
+            {
+                var endpoint = TunnelPlan.IsIPv4(sanitized.RemoteHost) ? IPAddress.Parse(sanitized.RemoteHost) :
+                    TunnelPlan.IsIPv4(server.Ip) ? IPAddress.Parse(server.Ip) : null;
+                var protocol = sanitized.IsUdp ? (byte)17 : (byte)6;
+                if (endpoint == null || !Ipv6Guard.Instance.EnableKillSwitch(endpoint, sanitized.RemotePort, protocol, options.AllowLocalLan))
+                {
+                    Fail(session, VpnErrors.ConnectFailed, "Windows could not activate the system-wide kill switch");
+                    return;
+                }
+            }
+            else if (!Ipv6Guard.Instance.KillSwitchRequested) Ipv6Guard.Instance.DisableKillSwitch();
+
             string runDir, profilePath, logPath;
             int port;
             var password = RandomSecret();
@@ -403,6 +416,7 @@ namespace STGPhantomVPN.Services
             CloseManagement();
             // The tunnel is down, so IPv6 may flow normally again.
             Ipv6Guard.Instance.Disable();
+            Ipv6Guard.Instance.SetKillSwitchTunnel(0);
             Ipv6FirewallActive = false;
             try
             {
@@ -491,6 +505,7 @@ namespace STGPhantomVPN.Services
             CloseManagement();
             SecureDir.DeleteQuietly(PidFile);
             Ipv6Guard.Instance.Disable();
+            Ipv6Guard.Instance.SetKillSwitchTunnel(0);
             Ipv6FirewallActive = false;
 
             var wasConnected = State == VpnState.Connected;
@@ -627,7 +642,7 @@ namespace STGPhantomVPN.Services
                 // >STATE:time,STATE,detail,local_ip,remote_ip,...
                 var f = line.Substring(7).Split(',');
                 if (f.Length > 1 && session == _session) _lastState = f[1];
-                if (f.Length > 1 && f[1] == "CONNECTED") OnConnected(session, f.Length > 2 ? f[2] : "");
+                if (f.Length > 1 && f[1] == "CONNECTED") OnConnected(session, f.Length > 2 ? f[2] : "", f.Length > 3 ? f[3] : "");
             }
             else if (line.StartsWith(">LOG:", StringComparison.Ordinal))
             {
@@ -655,8 +670,22 @@ namespace STGPhantomVPN.Services
             }
         }
 
-        void OnConnected(int session, string detail)
+        void OnConnected(int session, string detail, string localIp)
         {
+            ConnectOptions options;
+            lock (_gate) options = _options;
+            if (Ipv6Guard.Instance.KillSwitchRequested)
+            {
+                var luid = TunnelInterfaceLocator.FindLuid(localIp);
+                if (luid == 0 || !Ipv6Guard.Instance.SetKillSwitchTunnel(luid))
+                {
+                    Remember(VpnErrors.ConnectFailed, "The VPN tunnel interface could not be added to the kill switch");
+                    Log.Error("Kill switch remains closed: tunnel interface was not identified");
+                    SendManagement("signal SIGTERM");
+                    return;
+                }
+                Log.Info("Kill switch allows VPN tunnel interface LUID " + luid);
+            }
             lock (_gate)
             {
                 if (session != _session || State == VpnState.Connected) return;
@@ -753,6 +782,7 @@ namespace STGPhantomVPN.Services
         public bool BlockOutsideDns { get; set; }
         /// <summary>Keep IPv6 from bypassing the IPv4-only tunnel (<see cref="TunnelPlan.Ipv6BlockOptions"/>).</summary>
         public bool BlockIpv6 { get; set; }
+        public bool KillSwitch { get; set; }
         /// <summary>Resolvers replacing the server's DNS; null keeps what the server pushes.</summary>
         public string[] DnsServers { get; set; }
     }

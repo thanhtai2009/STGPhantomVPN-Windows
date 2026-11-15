@@ -18,6 +18,7 @@ namespace STGPhantomVPN.Core
         public string Proto { get; set; }
         /// <summary>Host of the first "remote" line.</summary>
         public string RemoteHost { get; set; }
+        public ushort RemotePort { get; set; } = 1194;
         public bool IsUdp => Proto == null || Proto.StartsWith("udp", StringComparison.Ordinal);
         public bool IsUsable => HasRemote && Config.Length > 0;
     }
@@ -179,6 +180,7 @@ namespace STGPhantomVPN.Core
                         if (!result.HasRemote)
                         {
                             result.RemoteHost = args[0];
+                            if (args.Count > 1 && ushort.TryParse(args[1], out var port) && port != 0) result.RemotePort = port;
                             if (args.Count > 2) remoteProto = args[2].ToLowerInvariant();
                         }
                         result.HasRemote = true;

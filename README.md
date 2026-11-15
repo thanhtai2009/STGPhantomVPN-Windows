@@ -1,6 +1,6 @@
 **English** | [Tiếng Việt](README.vi.md)
 
-# STG Phantom VPN for Windows - 1.0.11
+# STG Phantom VPN for Windows - 1.2.1
 
 <p align="center"><img src="assets/screenshots/home-en.png" alt="STG Phantom VPN - Home screen" width="720"></p>
 
@@ -8,9 +8,10 @@ A free VPN app for Windows that connects you to VPN Gate's public servers in jus
 
 ## Highlights
 
-- Automatically updated VPN Gate server list with country flags; connect or switch servers with a single click.
+- Automatically updated VPN Gate server list with country flags; Vietnamese servers are prioritized when browsing and choosing a recommended connection.
 - Installs the components it needs on first use, with no manual configuration.
 - Shows your real IP and VPN IP so you can check the connection; blocks IPv6 leaks and lets you choose your own DNS.
+- Optional system-wide kill switch: blocks outbound traffic outside the VPN tunnel while the app is running.
 - Windows 11 (Fluent) style interface: Mica background on Windows 11, follows the system light/dark mode.
 - Runs in the background from the system tray; the VPN stays connected when the window is closed.
 - Interface in Tiếng Việt, English, 简体中文 and ភាសាខ្មែរ.
@@ -23,7 +24,7 @@ A free VPN app for Windows that connects you to VPN Gate's public servers in jus
 
 ## Installation
 
-1. Download `STGPhantomVPN-Setup-1.0.11.exe` (recommended) or the portable `STGPhantomVPN-Windows-1.0.11.zip`.
+1. Download `STGPhantomVPN-Setup-1.2.1.exe` (recommended) or the portable `STGPhantomVPN-Windows-1.2.1.zip`.
 2. Run the installer and follow the steps. For the portable version, extract the whole folder and run `STGPhantomVPN.exe`.
 3. The app is not code-signed yet, so Windows SmartScreen may warn you. Compare the SHA-256 with the accompanying `.sha256` file, then choose **More info → Run anyway**.
 
@@ -36,7 +37,7 @@ A free VPN app for Windows that connects you to VPN Gate's public servers in jus
 
 ## Notes
 
-- The app has no kill switch yet: if the VPN tunnel drops, traffic goes over the normal connection.
+- The optional kill switch needs administrator approval (UAC). While enabled, outbound traffic stays blocked after disconnecting until you reconnect or turn it off. Its temporary WFP filters are removed when the app exits.
 - VPN Gate servers are run by volunteers, so speed and stability vary.
 
 ## Credits

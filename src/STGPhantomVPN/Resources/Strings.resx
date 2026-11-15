@@ -177,6 +177,9 @@
   <data name="log_read_failed" xml:space="preserve"><value>Could not read the log file: {0}</value></data>
   <data name="block_ipv6" xml:space="preserve"><value>Block IPv6 leaks</value></data>
   <data name="block_ipv6_summary" xml:space="preserve"><value>VPNGate is IPv4 only. When on, all IPv6 connections are blocked while the VPN is connected so your real IP cannot leak over IPv6; removed on disconnect or app exit. Bridged sessions use a Windows Firewall (WFP) block, which asks for administrator rights (UAC) once per app run.</value></data>
+  <data name="kill_switch" xml:space="preserve"><value>Kill Switch</value></data>
+  <data name="kill_switch_summary" xml:space="preserve"><value>Arms before the next VPN connection and blocks outbound traffic from every app unless it goes through the VPN tunnel or to the VPN server. Local LAN traffic is also allowed when Allow Local LAN is on. Windows asks for administrator rights (UAC). While enabled, internet access stays blocked after disconnecting until you reconnect or turn this off. Removed when STG Phantom VPN exits.</value></data>
+  <data name="kill_switch_disconnect_blocked" xml:space="preserve"><value>Could not confirm the Kill Switch is active, so the current VPN connection was left running.</value></data>
   <data name="ip_real" xml:space="preserve"><value>Real IP</value></data>
   <data name="ip_vpn" xml:space="preserve"><value>VPN IP</value></data>
   <data name="ip_check" xml:space="preserve"><value>Check IP</value></data>

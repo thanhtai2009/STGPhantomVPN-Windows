@@ -7,9 +7,9 @@
     <LangVersion>latest</LangVersion>
     <AssemblyName>STGPhantomVPN</AssemblyName>
     <RootNamespace>STGPhantomVPN</RootNamespace>
-    <Version>1.0.11</Version>
-    <FileVersion>1.0.11.0</FileVersion>
-    <InformationalVersion>1.0.11</InformationalVersion>
+    <Version>1.2.1</Version>
+    <FileVersion>1.2.1.0</FileVersion>
+    <InformationalVersion>1.2.1</InformationalVersion>
     <Product>STG Phantom VPN</Product>
     <Company>PNC STG</Company>
     <Authors>TaiNT13@PNC STG</Authors>

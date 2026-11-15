@@ -177,6 +177,9 @@
   <data name="log_read_failed" xml:space="preserve"><value>មិនអាចអានឯកសារកំណត់ហេតុបាន៖ {0}</value></data>
   <data name="block_ipv6" xml:space="preserve"><value>រារាំងការលេចធ្លាយ IPv6</value></data>
   <data name="block_ipv6_summary" xml:space="preserve"><value>VPNGate គាំទ្រតែ IPv4 ប៉ុណ្ណោះ។ ពេលបើក ការតភ្ជាប់ IPv6 ទាំងអស់ត្រូវបានរារាំងខណៈ VPN កំពុងតភ្ជាប់ ដើម្បីកុំឱ្យ IP ពិតលេចធ្លាយតាម IPv6 ហើយត្រូវដកចេញពេលផ្ដាច់ ឬចាកចេញពីកម្មវិធី។</value></data>
+  <data name="kill_switch" xml:space="preserve"><value>ការពារពេល VPN ផ្តាច់</value></data>
+  <data name="kill_switch_summary" xml:space="preserve"><value>បើកការការពារមុនពេលភ្ជាប់ VPN លើកក្រោយ ហើយរារាំងកម្មវិធីទាំងអស់មិនឱ្យបញ្ជូនចរាចរណ៍ក្រៅពីតាមផ្លូវរូង VPN ឬទៅម៉ាស៊ីនមេ VPN។ ប្រសិនបើបើក “Allow Local LAN” ចរាចរណ៍ LAN ក៏ត្រូវបានអនុញ្ញាត។ Windows នឹងស្នើសុំសិទ្ធិអ្នកគ្រប់គ្រង (UAC)។ ពេលបើក ការចូលអ៊ីនធឺណិតនៅតែត្រូវបានរារាំងបន្ទាប់ពីផ្តាច់ រហូតដល់ភ្ជាប់ឡើងវិញ ឬបិទមុខងារនេះ។ ច្បាប់ WFP បណ្តោះអាសន្នត្រូវបានដកចេញពេលបិទ STG Phantom VPN។</value></data>
+  <data name="kill_switch_disconnect_blocked" xml:space="preserve"><value>មិនអាចបញ្ជាក់ថាការការពារពេល VPN ផ្តាច់កំពុងសកម្មទេ ដូច្នេះការតភ្ជាប់ VPN បច្ចុប្បន្នត្រូវបានរក្សាទុក។</value></data>
   <data name="ip_real" xml:space="preserve"><value>IP ពិត</value></data>
   <data name="ip_vpn" xml:space="preserve"><value>IP VPN</value></data>
   <data name="ip_check" xml:space="preserve"><value>ពិនិត្យ IP</value></data>

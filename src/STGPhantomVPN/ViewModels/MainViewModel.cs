@@ -34,6 +34,7 @@ namespace STGPhantomVPN.ViewModels
         public MainViewModel(AppSettings settings)
         {
             _settings = settings;
+            Ipv6Guard.Instance.SetKillSwitchRequested(settings.KillSwitchEnabled);
             _ui = Application.Current.Dispatcher;
 
             _vpn.StateChanged += () => _ui.BeginInvoke(new Action(OnVpnStateChanged));
@@ -133,6 +134,7 @@ namespace STGPhantomVPN.ViewModels
                 _settings.SelectedHost = value.HostName;
                 _settings.SelectedIp = value.Ip;
                 SettingsStore.Save(_settings);
+                if (_settings.KillSwitchEnabled && CanArmKillSwitchNow) _ = Task.Run(() => ArmKillSwitch(value));
                 RefreshTexts();
             }
         }
@@ -236,6 +238,11 @@ namespace STGPhantomVPN.ViewModels
             {
                 _timedOut.Clear();
                 _notice = null;
+                if (_settings.KillSwitchEnabled && !await Task.Run(() => ArmKillSwitch(_vpn.CurrentServer)))
+                {
+                    SetNotice(Loc.T("kill_switch_disconnect_blocked"));
+                    return;
+                }
                 await _vpn.DisconnectAsync();
                 RefreshTexts();
                 return;
@@ -298,11 +305,12 @@ namespace STGPhantomVPN.ViewModels
             AllowLocalLan = _settings.AllowLocalLan,
             BlockOutsideDns = _settings.BlockOutsideDns,
             BlockIpv6 = !_settings.Ipv6BlockOff,
+            KillSwitch = _settings.KillSwitchEnabled,
             DnsServers = PublicDns.Resolvers(_settings.DnsProvider, _settings.CustomDns1, _settings.CustomDns2),
         };
 
         static string OptionsKey(ConnectOptions o) =>
-            o.AllowLocalLan + "|" + o.BlockOutsideDns + "|" + o.BlockIpv6 + "|" + (o.DnsServers == null ? "" : string.Join(",", o.DnsServers));
+            o.AllowLocalLan + "|" + o.BlockOutsideDns + "|" + o.BlockIpv6 + "|" + o.KillSwitch + "|" + (o.DnsServers == null ? "" : string.Join(",", o.DnsServers));
 
         string _appliedOptions;
 
@@ -316,6 +324,11 @@ namespace STGPhantomVPN.ViewModels
         {
             var server = _vpn.CurrentServer ?? _selected;
             if (server == null || IsBusy) return;
+            if (_settings.KillSwitchEnabled && !await Task.Run(() => ArmKillSwitch(server)))
+            {
+                SetNotice(Loc.T("kill_switch_disconnect_blocked"));
+                return;
+            }
             await _vpn.DisconnectAsync();
             await ConnectAsync(server);
         }
@@ -334,6 +347,11 @@ namespace STGPhantomVPN.ViewModels
         void OnVpnStateChanged()
         {
             if (_vpn.State == VpnState.Connected) _timedOut.Clear();
+            else if (_settings.KillSwitchEnabled && CanArmKillSwitchNow)
+            {
+                var server = _vpn.CurrentServer ?? _selected;
+                _ = Task.Run(() => ArmKillSwitch(server));
+            }
             Raise(nameof(ConnectionSettingsPending));
             if (_vpn.State == VpnState.Error && _vpn.ErrorKey == VpnErrors.DriverMissing) _ = CheckTapAsync(TapPromptTrigger.DriverError);
             if (_vpn.State == VpnState.Refused) OnServerRefused();
@@ -873,6 +891,11 @@ namespace STGPhantomVPN.ViewModels
                 if (_settings.AllowLocalLan == value) return;
                 _settings.AllowLocalLan = value;
                 SettingsStore.Save(_settings);
+                if (_settings.KillSwitchEnabled && CanArmKillSwitchNow)
+                {
+                    var server = _selected;
+                    _ = Task.Run(() => ArmKillSwitch(server));
+                }
                 Raise();
                 Raise(nameof(ConnectionSettingsPending));
             }
@@ -903,6 +926,39 @@ namespace STGPhantomVPN.ViewModels
                 Raise(nameof(ConnectionSettingsPending));
             }
         }
+
+        public bool KillSwitch
+        {
+            get => _settings.KillSwitchEnabled;
+            set
+            {
+                if (_settings.KillSwitchEnabled == value) return;
+                _settings.KillSwitchEnabled = value;
+                SettingsStore.Save(_settings);
+                Ipv6Guard.Instance.SetKillSwitchRequested(value);
+                if (value && CanArmKillSwitchNow && _selected != null)
+                {
+                    var server = _selected;
+                    _ = Task.Run(() => ArmKillSwitch(server));
+                }
+                Raise();
+                Raise(nameof(ConnectionSettingsPending));
+            }
+        }
+
+        bool ArmKillSwitch(VpnServer server)
+        {
+            if (server == null) return false;
+            var sanitized = OvpnSanitizer.Sanitize(server.DecodeOpenVpnConfig());
+            var endpoint = TunnelPlan.IsIPv4(sanitized.RemoteHost) ? System.Net.IPAddress.Parse(sanitized.RemoteHost) :
+                TunnelPlan.IsIPv4(server.Ip) ? System.Net.IPAddress.Parse(server.Ip) : null;
+            var ok = sanitized.IsUsable && endpoint != null && Ipv6Guard.Instance.EnableKillSwitch(endpoint,
+                sanitized.RemotePort, sanitized.IsUdp ? (byte)17 : (byte)6, _settings.AllowLocalLan);
+            if (!ok) Log.Warn("Kill switch is configured but could not be armed for the selected VPN server");
+            return ok;
+        }
+
+        bool CanArmKillSwitchNow => _vpn.State == VpnState.Disconnected || _vpn.State == VpnState.Error || _vpn.State == VpnState.Refused;
 
         /// <summary>One row of the DNS picker.</summary>
         public sealed class DnsChoice

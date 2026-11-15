@@ -70,41 +70,33 @@ namespace STGPhantomVPN.Services
                 System.Threading.EventWaitHandle.OpenExisting(Ipv6Firewall.EventName(token, s));
             using (var appExit = new System.Threading.ManualResetEvent(false) { SafeWaitHandle = new Microsoft.Win32.SafeHandles.SafeWaitHandle(app.Handle, false) })
             using (var quit = Open(Ipv6Firewall.Signal.Quit))
-            using (var on = Open(Ipv6Firewall.Signal.On))
-            using (var onLan = Open(Ipv6Firewall.Signal.OnLan))
-            using (var off = Open(Ipv6Firewall.Signal.Off))
+            using (var update = Open(Ipv6Firewall.Signal.On))
             using (var ok = Open(Ipv6Firewall.Signal.Ok))
             using (var fail = Open(Ipv6Firewall.Signal.Fail))
             {
-                Log.Info("IPv6 leak block helper serving pid " + pid);
+                Log.Info("WFP network guard helper serving pid " + pid);
                 WfpEngine engine = null;
                 try
                 {
-                    var handles = new System.Threading.WaitHandle[] { appExit, quit, on, onLan, off };
+                    var handles = new System.Threading.WaitHandle[] { appExit, quit, update };
                     while (true)
                     {
                         var i = System.Threading.WaitHandle.WaitAny(handles);
                         if (i <= 1) break;
-                        engine?.Dispose();
-                        engine = null;
-                        if (i == 4)
-                        {
-                            Log.Info("IPv6 leak block removed");
-                            ok.Set();
-                            continue;
-                        }
                         try
                         {
-                            engine = WfpEngine.OpenDynamic();
-                            var n = engine.AddIpv6Block(i == 3);
-                            Log.Info("IPv6 leak block: " + n + " WFP filters added (dynamic session)");
+                            var state = Ipv6Guard.ReadState(token);
+                            engine ??= WfpEngine.OpenDynamic();
+                            var n = engine.ReplaceFilters(state.Ipv6, state.Ipv6Lan, state.Kill, state.KillLan,
+                                state.Endpoint, state.Port, state.Protocol, state.TunnelLuid);
+                            Log.Info("WFP network guard updated: " + n + " filters; IPv6=" + state.Ipv6 + ", kill switch=" + state.Kill);
                             ok.Set();
                         }
                         catch (Exception ex)
                         {
-                            Log.Error("IPv6 leak block failed", ex);
-                            engine?.Dispose();
-                            engine = null;
+                            Log.Error("WFP network guard update failed", ex);
+                            try { Ipv6Guard.WriteError(token, ex.ToString()); }
+                            catch (Exception statusError) { Log.Warn("Could not return WFP error details to app: " + statusError.Message); }
                             fail.Set();
                         }
                     }
@@ -112,7 +104,7 @@ namespace STGPhantomVPN.Services
                 finally
                 {
                     engine?.Dispose();
-                    Log.Info("IPv6 leak block helper exiting; filters removed");
+                    Log.Info("WFP network guard helper exiting; filters removed");
                 }
             }
             return ExitOk;

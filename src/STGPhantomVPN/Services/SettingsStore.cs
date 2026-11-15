@@ -34,6 +34,8 @@ namespace STGPhantomVPN.Services
         /// member, get the default "block IPv6 while connected".
         /// </summary>
         [DataMember] public bool Ipv6BlockOff { get; set; }
+        /// <summary>When enabled, block system outbound traffic outside the VPN while this app is running.</summary>
+        [DataMember] public bool KillSwitchEnabled { get; set; }
     }
 
     public static class SettingsStore

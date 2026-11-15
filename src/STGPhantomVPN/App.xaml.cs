@@ -103,7 +103,7 @@ namespace STGPhantomVPN
 
         protected override void OnExit(ExitEventArgs e)
         {
-            // Ends the IPv6 leak block helper, if one was started; its WFP filters go with it.
+            // Ends the temporary WFP guard helper, if one was started; its filters go with it.
             Services.Ipv6Guard.Instance.Dispose();
             _activateWait?.Unregister(null);
             _activate?.Dispose();

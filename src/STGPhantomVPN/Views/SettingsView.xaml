@@ -76,6 +76,10 @@
                                     Description="{Binding [block_ipv6_summary], Source={x:Static svc:Loc.Instance}}">
                     <ToggleButton Style="{StaticResource Fluent.ToggleSwitch}" IsChecked="{Binding BlockIpv6}" />
                 </views:SettingsCard>
+                <views:SettingsCard Icon="ShieldLock" Header="{Binding [kill_switch], Source={x:Static svc:Loc.Instance}}"
+                                    Description="{Binding [kill_switch_summary], Source={x:Static svc:Loc.Instance}}">
+                    <ToggleButton Style="{StaticResource Fluent.ToggleSwitch}" IsChecked="{Binding KillSwitch}" />
+                </views:SettingsCard>
 
                 <!-- DNS while connected: server default, public resolvers, or custom IPv4 -->
                 <views:SettingsCard Icon="Dns" Header="{Binding [dns_label], Source={x:Static svc:Loc.Instance}}"

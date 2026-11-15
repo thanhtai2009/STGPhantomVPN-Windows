@@ -177,6 +177,9 @@
   <data name="log_read_failed" xml:space="preserve"><value>无法读取日志文件：{0}</value></data>
   <data name="block_ipv6" xml:space="preserve"><value>阻止 IPv6 泄露</value></data>
   <data name="block_ipv6_summary" xml:space="preserve"><value>VPNGate 仅支持 IPv4。开启后，VPN 连接期间所有 IPv6 连接都会被阻止，以免真实 IP 通过 IPv6 泄露；断开连接或退出应用时自动解除。</value></data>
+  <data name="kill_switch" xml:space="preserve"><value>网络断开保护</value></data>
+  <data name="kill_switch_summary" xml:space="preserve"><value>在下次 VPN 连接前启用，阻止所有应用绕过 VPN 隧道发送流量；仅允许连接 VPN 服务器和通过隧道的数据。如果启用了“允许本地网络”，本地 LAN 流量也会放行。Windows 会请求管理员权限（UAC）。启用后，断开 VPN 时网络仍会被阻止，直到重新连接或关闭此功能。退出 STG Phantom VPN 时会移除临时 WFP 规则。</value></data>
+  <data name="kill_switch_disconnect_blocked" xml:space="preserve"><value>无法确认网络断开保护已启用，因此当前 VPN 连接仍保持运行。</value></data>
   <data name="ip_real" xml:space="preserve"><value>真实 IP</value></data>
   <data name="ip_vpn" xml:space="preserve"><value>VPN IP</value></data>
   <data name="ip_check" xml:space="preserve"><value>检查 IP</value></data>

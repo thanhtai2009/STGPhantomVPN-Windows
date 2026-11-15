@@ -184,8 +184,10 @@ namespace STGPhantomVPN.Core
         public static VpnServer PickDefault(IList<VpnServer> list)
         {
             if (list == null || list.Count == 0) return null;
-            var tcp = list.Where(s => s.PrefersTcp()).ToList();
-            var pool = tcp.Count > 0 ? tcp : list.ToList();
+            var preferred = list.Where(s => s.IsVietnam).ToList();
+            var candidates = preferred.Count > 0 ? preferred : list.ToList();
+            var tcp = candidates.Where(s => s.PrefersTcp()).ToList();
+            var pool = tcp.Count > 0 ? tcp : candidates;
             return pool.Where(s => s.Ping > 0).OrderBy(s => s.Ping).FirstOrDefault()
                    ?? pool.OrderByDescending(s => s.Score).FirstOrDefault();
         }
@@ -195,6 +197,8 @@ namespace STGPhantomVPN.Core
         {
             var pool = list.Where(s => !excludedKeys.Contains(s.Key)).ToList();
             if (pool.Count == 0) return null;
+            var vietnam = pool.Where(s => s.IsVietnam).ToList();
+            if (vietnam.Count > 0) pool = vietnam;
             return pool.Where(s => s.Ping > 0)
                        .OrderByDescending(s => s.Score).ThenBy(s => s.Ping)
                        .FirstOrDefault(s => s.PrefersTcp())

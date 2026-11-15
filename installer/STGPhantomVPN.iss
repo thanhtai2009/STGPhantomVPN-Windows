@@ -5,7 +5,7 @@
 ; AppDir is the same folder that goes into the portable zip (exe, DLLs, satellite folders, Assets, licenses).
 
 #ifndef AppVersion
-  #define AppVersion "1.0.11"
+  #define AppVersion "1.2.1"
 #endif
 #ifndef AppDir
   #error Define AppDir: the staged application folder.

@@ -1,6 +1,6 @@
 [English](README.md) | **Tiếng Việt**
 
-# STG Phantom VPN for Windows - 1.0.11
+# STG Phantom VPN for Windows - 1.2.1
 
 <p align="center"><img src="assets/screenshots/home-vi.png" alt="STG Phantom VPN - Màn hình Trang chủ" width="720"></p>
 
@@ -8,9 +8,10 @@
 
 ## Điểm nổi bật
 
-- Danh sách máy chủ VPN Gate tự động cập nhật, kèm cờ quốc gia; kết nối hoặc đổi máy chủ chỉ bằng một nút bấm.
+- Danh sách máy chủ VPN Gate tự động cập nhật, kèm cờ quốc gia; máy chủ Việt Nam được ưu tiên khi xem danh sách và chọn kết nối đề xuất.
 - Tự cài đặt các thành phần cần thiết ở lần sử dụng đầu tiên, không cần cấu hình thủ công.
 - Hiển thị IP thực và IP VPN để kiểm tra kết nối; chặn rò rỉ IPv6 và cho phép chọn DNS riêng.
+- Có Kill Switch tùy chọn ở cấp toàn hệ thống: chặn lưu lượng gửi ra ngoài tunnel VPN khi ứng dụng đang chạy.
 - Giao diện phong cách Windows 11 (Fluent): nền Mica trên Windows 11, tự theo chế độ sáng/tối của hệ thống.
 - Chạy nền dưới khay hệ thống, VPN vẫn giữ kết nối khi đóng cửa sổ.
 - Giao diện tiếng Việt, English, 简体中文 và ភាសាខ្មែរ.
@@ -23,7 +24,7 @@
 
 ## Cài đặt
 
-1. Tải `STGPhantomVPN-Setup-1.0.11.exe` (khuyên dùng) hoặc bản portable `STGPhantomVPN-Windows-1.0.11.zip`.
+1. Tải `STGPhantomVPN-Setup-1.2.1.exe` (khuyên dùng) hoặc bản portable `STGPhantomVPN-Windows-1.2.1.zip`.
 2. Chạy trình cài đặt và làm theo hướng dẫn. Với bản portable, giải nén toàn bộ thư mục rồi chạy `STGPhantomVPN.exe`.
 3. Ứng dụng chưa được ký số nên Windows SmartScreen có thể cảnh báo. Đối chiếu mã SHA-256 với tệp `.sha256` đi kèm, sau đó chọn **Thông tin thêm → Vẫn chạy**.
 
@@ -36,7 +37,7 @@
 
 ## Lưu ý
 
-- Ứng dụng chưa có kill switch: nếu đường hầm VPN bị ngắt, lưu lượng sẽ đi qua kết nối thông thường.
+- Kill Switch cần xác nhận quyền quản trị (UAC). Khi bật, lưu lượng gửi ra vẫn bị chặn sau khi ngắt kết nối cho đến khi kết nối lại hoặc tắt tính năng; bộ lọc WFP tạm thời được gỡ khi thoát ứng dụng.
 - Máy chủ VPN Gate do tình nguyện viên vận hành, tốc độ và độ ổn định có thể khác nhau.
 
 ## Credits

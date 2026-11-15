@@ -92,7 +92,7 @@ namespace STGPhantomVPN.Core
 
     public static class AppVersion
     {
-        public const string Current = "1.0.11";
+        public const string Current = "1.2.1";
         public const string AppName = "STG Phantom VPN";
     }
 }
